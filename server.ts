@@ -2,8 +2,8 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
-const homeRouter = require("./routes/homeRoutes");
-const userRouter = require("./routes/userRoutes");
+const homeRouter = require("./src/routes/homeRoutes");
+const userRouter = require("./src/routes/userRoutes");
 
 
 createConnection().then(async connection => {
@@ -19,6 +19,6 @@ createConnection().then(async connection => {
     // start express server
     app.listen(3000);
 
-    console.log("Express server has started on port 4000. Open http://localhost:3000/ to see results");
+    console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
 
 }).catch(error => console.log(error));
