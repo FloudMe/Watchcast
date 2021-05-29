@@ -14,7 +14,7 @@ createConnection().then(async connection => {
 
     // register express routes from defined application routes
     app.use('/', homeRouter);
-    //app.use('/users', userRouter);
+    app.use('/users', userRouter);
 
     // start express server
     app.listen(3000);
