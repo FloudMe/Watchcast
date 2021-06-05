@@ -17,8 +17,8 @@ createConnection().then(async connection => {
     //app.use('/users', userRouter);
 
     // start express server
-    app.listen(3000);
+    app.listen(4000);
 
-    console.log("Express server has started on port 3000. Open http://localhost:3000/ to see results");
+    console.log("Express server has started on port 4000. Open http://localhost:4000/ to see results");
 
 }).catch(error => console.log(error));
