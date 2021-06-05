@@ -4,6 +4,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 const homeRouter = require("./src/routes/homeRoutes");
 const userRouter = require("./src/routes/userRoutes");
+const videosRouter = require("./src/routes/videosRoutes");
 
 
 createConnection().then(async connection => {
@@ -15,6 +16,7 @@ createConnection().then(async connection => {
     // register express routes from defined application routes
     app.use('/', homeRouter);
     app.use('/users', userRouter);
+    app.use('/videos', videosRouter);
 
     // start express server
     app.listen(3000);

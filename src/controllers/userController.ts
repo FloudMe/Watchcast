@@ -1,5 +1,4 @@
 import {Request, Response} from "express";
-import { getRepository } from "typeorm";
 import { User } from "../entity/user";
 import { UserDetails } from "../entity/user-details";
 import * as bcrypt from "bcrypt";
@@ -60,8 +59,43 @@ const login = async (req: Request, res: Response) => {
     }
 }
 
+const remove = async (req: Request, res: Response) => {
+
+    const uuid = req.params.uuid
+
+    try {
+        const user = await User.findOneOrFail({ uuid });
+
+        const user_details = await UserDetails.findOne({ user });
+
+        await user_details.remove();
+
+        await user.remove();
+
+        return res.status(204).json({ message: 'User deleted successfully' });
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
+const findUser = async (req: Request, res: Response) => {
+    const uuid = req.params.uuid
+
+    try {
+        const user = await User.findOneOrFail({ uuid })
+
+        return res.json(user)
+    } catch (err) {
+        console.log(err)
+        return res.status(404).json({ user: 'User not found' })
+    }
+}
+
 module.exports = {
     userIndex,
     register,
-    login
+    login,
+    remove,
+    findUser
 };
