@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import "./Login.css"
+import "./Background.css"
+// import '../Component/Background.css';
 import axios from "axios";
+import WatchCast from "../Component/WatchCast";
+// import Background from "../Component/Background";
 
 class Register extends Component {
 
@@ -59,19 +62,22 @@ class Register extends Component {
 
     render() {
         return (
-            <div className="loginRegister">
-                <form className="loginRegisterForm" onSubmit={this.handleSubmit}>
-                    <input className="loginRegisterFormInput" type="text" name="email" id="email" placeholder="E-mail" onChange={this.handleChange} />
-                    <input className="loginRegisterFormInput" type="password" name="password" id="password" placeholder="Hasło" onChange={this.handleChange} />
-                    <input className="loginRegisterFormInput" type="password" name="passwordAgain" id="passwordAgain" placeholder="Powtórzyć hasło" onChange={this.handleChange} />
-                    <input className="loginRegisterFormInput" type="text" name="firstName" id="firstName" placeholder="Imie" onChange={this.handleChange} />
-                    <input className="loginRegisterFormInput" type="text" name="lastName" id="lastName" placeholder="Nazwisko" onChange={this.handleChange} />
-                    <input className="loginRegisterFormInput" type="text" name="country" id="country" placeholder="Kraj" onChange={this.handleChange} />
-                    <input className="loginRegisterSubmit" type="submit" value="Sign in" />
-                </form>
-                <div className="toLoginRegister">
-                    <h2 className="toLR">Masz już konto? Zaloguj się!</h2>
-                    <Link to="/login">Login</Link>
+            <div id="SLIDE_BG">
+                <WatchCast />
+                <div className="loginRegister">
+                    <form className="loginRegisterForm" onSubmit={this.handleSubmit}>
+                        <input className="loginRegisterFormInput" type="text" name="email" id="email" placeholder="E-mail" onChange={this.handleChange} />
+                        <input className="loginRegisterFormInput" type="password" name="password" id="password" placeholder="Hasło" onChange={this.handleChange} />
+                        <input className="loginRegisterFormInput" type="password" name="passwordAgain" id="passwordAgain" placeholder="Powtórzyć hasło" onChange={this.handleChange} />
+                        <input className="loginRegisterFormInput" type="text" name="firstName" id="firstName" placeholder="Imie" onChange={this.handleChange} />
+                        <input className="loginRegisterFormInput" type="text" name="lastName" id="lastName" placeholder="Nazwisko" onChange={this.handleChange} />
+                        <input className="loginRegisterFormInput" type="text" name="country" id="country" placeholder="Kraj" onChange={this.handleChange} />
+                        <input className="loginRegisterSubmit" type="submit" value="Sign in" />
+                    </form>
+                    <div className="toLoginRegister">
+                        <h2 className="toLR">Masz już konto? Zaloguj się!</h2>
+                        <Link to="/login">Login</Link>
+                    </div>
                 </div>
             </div>
         )

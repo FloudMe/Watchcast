@@ -4,6 +4,7 @@ import './index.css';
 import Login from './Routes/Login'
 import Register from './Routes/Register';
 import Videos from './Routes/Videos';
+import MainPage from './Routes/MainPage';
 
 function App() {
     const [loggedUser, setLoggedUser] = useState(null);
@@ -13,17 +14,18 @@ function App() {
         <BrowserRouter>
           <div className="App">
             <Switch>
-              <Route exact path='/'>
+              {/* <Background /> */}
+              <Route exact path='/' component={MainPage}>
                 
               </Route>
-              
+
               <Route
                          exact path="/login"
                          render={(props) => <Login {...props} setLoggedUser={setLoggedUser}/>}
                      >
               </Route>
-              <Route exact path='/register' component={Register}>
-
+              <Route exact path='/register' component={Register} >
+ 
               </Route>
               <Route exact path='/videos/' component={Videos}>
                 

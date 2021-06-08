@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import "./Login.css"
+import "./Login.css"
+import './Background.css';
 import axios from "axios";
+import WatchCast from "../Component/WatchCast";
+// import Background from "../Component/Background";
 
 class Login extends Component {
 
@@ -49,18 +52,22 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="loginRegister"> 
-                <form className="loginRegisterForm" onSubmit={this.handleSubmit}>
-                    <h2>Zaloguj się!</h2>
-                    <input className="loginRegisterFormInput" type="text" name="email" id="email" placeholder="E-mail" onChange={this.handleChange} />
-                    <input className="loginRegisterFormInput" type="password" name="password" id="password" placeholder="Hasło" onChange={this.handleChange} />
-                    <input className="loginRegisterSubmit" type="submit" value="Sign in" />
-                </form>
-                <div className="toLoginRegister">
-                    <h2 className="toLR">Nie masz konta? Załóż dzisiaj!</h2>
-                    <Link to="/register">Załóż konto</Link>
+            <div id="SLIDE_BG">
+                <WatchCast />
+                <div className="loginRegister">
+                    <form className="loginRegisterForm" onSubmit={this.handleSubmit}>
+                        {/* <h2>Zaloguj się!</h2> */}
+                        <input className="loginRegisterFormInput" type="text" name="email" id="email" placeholder="E-mail" onChange={this.handleChange} />
+                        <input className="loginRegisterFormInput" type="password" name="password" id="password" placeholder="Hasło" onChange={this.handleChange} />
+                        <input className="loginRegisterSubmit" type="submit" value="Sign in" />
+                    </form>
+                    <div className="toLoginRegister">
+                        <h2 className="toLR">Nie masz konta? Załóż dzisiaj!</h2>
+                        <Link to="/register">Załóż konto</Link>
+                    </div>
                 </div>
             </div>
+
         )
     }
 }
