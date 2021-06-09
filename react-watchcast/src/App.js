@@ -27,8 +27,17 @@ function App() {
               <Route exact path='/register' component={Register} >
  
               </Route>
-              <Route exact path='/videos/' component={Videos}>
+              <Route exact path='/videos' component={Videos}>
                 
+              </Route>
+              <Route exact path='/video'>
+
+              </Route>
+              <Route exact path='/change-role'>
+
+              </Route>
+              <Route exact path='/about'>
+
               </Route>
             </Switch>
           </div>

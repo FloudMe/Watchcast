@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "./Login.css"
 import './Background.css';
 import axios from "axios";
 import WatchCast from "../Component/WatchCast";
-// import Background from "../Component/Background";
+import Button from "../Component/Button";
 
 class Login extends Component {
 
@@ -63,7 +62,8 @@ class Login extends Component {
                     </form>
                     <div className="toLoginRegister">
                         <h2 className="toLR">Nie masz konta? Załóż dzisiaj!</h2>
-                        <Link to="/register">Załóż konto</Link>
+                        {/* <Link to="/register">Załóż konto</Link> */}
+                        <Button text='register' link='/login' />
                     </div>
                 </div>
             </div>

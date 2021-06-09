@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Video = ({imagePath, title}) => {
+const Video = ({name, imagePath, title}) => {
     return (
         <div>
-            <img className='imagePath' src={require(imagePat)} />
+            {/* <img className={name} src={require(imagePath)} /> */}
             <h1>{title}</h1>
         </div>
     )

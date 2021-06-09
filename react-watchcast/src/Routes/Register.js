@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "./Background.css"
-// import '../Component/Background.css';
 import axios from "axios";
 import WatchCast from "../Component/WatchCast";
-// import Background from "../Component/Background";
+import Button from "../Component/Button";
 
 class Register extends Component {
 
@@ -76,7 +74,7 @@ class Register extends Component {
                     </form>
                     <div className="toLoginRegister">
                         <h2 className="toLR">Masz już konto? Zaloguj się!</h2>
-                        <Link to="/login">Login</Link>
+                        <Button text='login' link='/login' />
                     </div>
                 </div>
             </div>

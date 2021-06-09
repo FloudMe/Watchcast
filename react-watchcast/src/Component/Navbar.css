@@ -1,0 +1,13 @@
+.navbar{
+    background: #000000 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    border-radius: 0px 0px 10px 10px;
+    opacity: 1;
+    height: 1.5em
+}
+
+svg {
+    color: white;
+    position: absolute;
+    right: 1em;
+}
