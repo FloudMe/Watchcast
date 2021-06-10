@@ -11,3 +11,19 @@ svg {
     position: absolute;
     right: 1em;
 }
+
+.settings{
+    display: block;
+    right: 2em;
+    position: absolute;
+    top: 1em;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+ul{
+    list-style-type: none;
+}

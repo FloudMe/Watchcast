@@ -13,8 +13,6 @@ class Videos extends Component {
         }
     }
 
-    
-
     render() {
         return (
             <div >

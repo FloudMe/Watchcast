@@ -6,3 +6,7 @@ tmp/
 temp/
 ormconfig.json
 .env
+
+
+react-watchcast/src/public
+react-watchcast/public
