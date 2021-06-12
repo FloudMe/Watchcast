@@ -38,7 +38,6 @@ class Register extends Component {
                 first_name: this.state.firstName,
                 last_name: this.state.lastName,
                 country: this.state.country,
-                city: this.state.city,
             },
             
         }

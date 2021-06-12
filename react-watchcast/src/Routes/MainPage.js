@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { React,  Component } from "react";
 import './Background.css';
 import './MainPage.css';
 import WatchCast from "../Component/WatchCast";
@@ -21,7 +21,6 @@ class MainPage extends Component {
                     <Button text='login' link='/login' />
                     <div className="brakKonta">Nie masz konta, zapisz się!</div>
                     <Button text='register' link='/register' />
-                    {/* <Link to="/register">Register</Link> */}
                 </div>
             </div>
         )

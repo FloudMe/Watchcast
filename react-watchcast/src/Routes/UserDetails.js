@@ -1,5 +1,4 @@
 import  { React,  Component } from "react";
-import { Link } from "react-router-dom";
 import Navbar from "../Component/Navbar";
 import ChangePass from "../Component/ChangePass";
 import { Details } from "../Component/Details";
@@ -11,7 +10,7 @@ class UserDetails extends Component {
             showUserDetails: false,
             showUserChangePass: false
         }
-        
+
     }
 
     render(){

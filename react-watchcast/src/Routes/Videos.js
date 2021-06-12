@@ -8,8 +8,10 @@ class Videos extends Component {
 
     constructor(props) {
         super(props);
-        this.videos = {
-
+        this.state = {
+            idVideo:[],
+            videoImagePath:[],
+            title: []
         }
     }
 

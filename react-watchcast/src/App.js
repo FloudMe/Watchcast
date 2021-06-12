@@ -7,6 +7,8 @@ import Videos from './Routes/Videos';
 import MainPage from './Routes/MainPage';
 import UserDetails from "./Routes/UserDetails";
 import About from './Routes/About';
+import ChangeRole from "./Routes/ChangeRole";
+import VideoPlayer from './Routes/VideoPlayer';
 
 function App() {
     const [loggedUser, setLoggedUser] = useState(null);
@@ -31,12 +33,15 @@ function App() {
               <Route exact path='/videos' component={Videos}>
                 
               </Route>
-              <Route exact path='/video'>
+              <Route exact path='/video/:id'
+                     render={(props) => (
+                      <VideoPlayer id={props.match.params.id}/>
+                  )} >
 
               </Route>
               <Route exact path='/user-details' component={UserDetails}>
               </Route>
-              <Route exact path='/change-role'>
+              <Route exact path='/change-role' component={ChangeRole}>
 
               </Route>
               <Route exact path='/about' component={About}>

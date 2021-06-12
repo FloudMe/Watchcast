@@ -10,3 +10,5 @@ ormconfig.json
 
 react-watchcast/src/public
 react-watchcast/public
+react-watchcast/src/firebase.js
+react-watchcast/storage.rules
