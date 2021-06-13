@@ -22,7 +22,10 @@ export class Videos extends Model {
     @Column()
     description: string;
 
-    @Column()
+    @Column({default: 0})
     views: number;
+
+    @Column()
+    path: string;
 
 }

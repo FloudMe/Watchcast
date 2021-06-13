@@ -1,4 +1,5 @@
-import {React, useState} from 'react'
+import {React, useState} from 'react';
+import axios from "axios";
 
 const ChangePass = () => {
     const [oldPass, setOldPass] = useState('');
@@ -9,13 +10,21 @@ const ChangePass = () => {
         e.preventDefault();
 
         if(newPass === checkNewPass)
-            alert('dobre');
-        
-        alert('zle haslo');
-
-        setOldPass('');
-        setNewPass('');
-        setCheckNewPass('');
+        {
+            axios.put(`http://localhost:4000/users/changePass` /*+ uuid*/, {"password": newPass})
+            .then(res=>{
+                    if(res.status)
+                    {
+                        alert("Pomyslnie zmieniono haslo");
+                        
+                        setOldPass('');
+                        setNewPass('');
+                        setCheckNewPass('');
+                    }
+                    else
+                        alert("Nie zmienono hasła");
+                })
+        }
     }
 
     return (

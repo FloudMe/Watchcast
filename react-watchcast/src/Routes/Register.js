@@ -27,7 +27,7 @@ class Register extends Component {
     };
 
     handleSubmit(event) {
-        console.log("dupa");
+
         event.preventDefault();
         const userAll = {
             user: {

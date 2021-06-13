@@ -1,6 +1,6 @@
 import { React, Component } from "react";
 import ReactPlayer from 'react-player';
-import myVideo from '../public/test.mp4'
+// import myVideo from '../public/test.mp4'
 import './VideoPlayer.css';
 import Navbar from "../Component/Navbar";
 
