@@ -1,9 +1,10 @@
-import React, { Component } from "react";
-import "./Login.css"
-import './Background.css';
 import axios from "axios";
-import WatchCast from "../Component/WatchCast";
+import React, { Component } from "react";
 import Button from "../Component/Button";
+import WatchCast from "../Component/WatchCast";
+import authentication from "../scripts/authentication";
+import './Background.css';
+import "./Login.css";
 
 class Login extends Component {
 
@@ -23,6 +24,8 @@ class Login extends Component {
     };
 
     handleSubmit(event) {
+        event.preventDefault();
+
         const user = {
             email: this.state.email,
             password: this.state.password
@@ -31,22 +34,24 @@ class Login extends Component {
         axios.post(`http://localhost:4000/users/login`, user)
             .then(res => {
                 const data = res.data;
-                if(data !== "Wrong password!" && data !== "User does not exist"){
-                    // console.log('Im here');
-                    // localStorage.setItem("user", JSON.stringify(data.token));
-                    // localStorage.setItem("role", JSON.stringify(data.role));
-                    // this.props.setLoggedUser(authentication.getCurrentUser());
-                    alert("Zalogowałeś się. Powrót na stronę główną");
+                alert(data);
+                if (data !== "Wrong password!" && data !== "User does not exist") {
+
+                    localStorage.setItem("role", JSON.stringify(data.role));
+                    localStorage.setItem("user", JSON.stringify(data.token));
+
+                    this.props.setLoggedUser(authentication.getCurrentUser());
+                    // userHasAuthenticated(true);
+
+                    this.props.history.push('/videos');
                 } else {
                     throw Error("Zle hasło");
                 }
             })
-            .catch(res =>{
+            .catch(res => {
                 console.error(res);
-                alert("Błąd z zalogowaniem się. Powrót na stronę glówną");
+                alert("Błąd z zalogowaniem się.");
             });
-        event.preventDefault();
-        this.props.history.push('/');
     }
 
     render() {
@@ -63,7 +68,7 @@ class Login extends Component {
                     <div className="toLoginRegister">
                         <h2 className="toLR">Nie masz konta? Załóż dzisiaj!</h2>
                         {/* <Link to="/register">Załóż konto</Link> */}
-                        <Button text='register' link='/login' />
+                        <Button text='register' link='/register' />
                     </div>
                 </div>
             </div>

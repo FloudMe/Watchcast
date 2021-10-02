@@ -3,6 +3,7 @@ import {createConnection} from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from 'cors';
+import * as cookieParser from 'cookie-parser';
 const homeRouter = require("./src/routes/homeRoutes");
 const userRouter = require("./src/routes/userRoutes");
 const videosRouter = require("./src/routes/videosRoutes");
@@ -15,8 +16,10 @@ createConnection().then(async connection => {
     // app.use(bodyParser.urlencoded({
     //     extended: true
     //   }));
-
-    // app.use(bodyParser.json());
+    app.use(cookieParser())
+    // app.use(express.urlencoded({ extended: true }))
+    app.use(bodyParser.json());
+    
     app.use(cors());
 
     // register express routes from defined application routes

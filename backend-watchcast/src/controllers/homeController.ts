@@ -7,8 +7,8 @@
 //     homeIndex
 // };
 
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 
 export let homeIndex = (req: Request, res: Response) => {
-    res.json({content: 'hello world'});
+    res.json({ content: 'hello world' });
 };

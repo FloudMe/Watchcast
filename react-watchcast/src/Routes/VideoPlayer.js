@@ -18,8 +18,8 @@ class VideoPlayer extends Component {
     //     return {videoPath: props.videoPath, title: props.title };
     //   }
 
-    render(){
-        
+    render() {
+
         return (
             <div>
                 <Navbar />
@@ -29,14 +29,14 @@ class VideoPlayer extends Component {
                         //   url={this.state.videoPath}
                         url='https://firebasestorage.googleapis.com/v0/b/watchcast-37092.appspot.com/o/test.mp4?alt=media&token=35af7e8e-4985-45bc-bfc8-f12b813f054a'
                         controls={true}
-                
+
                     />
                     <h2>Tytul</h2>
                 </div>
-                
 
 
-            {/* <ReactVideo
+
+                {/* <ReactVideo
                     src="../public/test.mp4"
                     poster="https://www.example.com/poster.png"
                     primaryColor="red"
@@ -48,7 +48,7 @@ class VideoPlayer extends Component {
                 height={600}
             /> */}
             </div>
-            
+
         );
     }
 }

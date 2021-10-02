@@ -1,9 +1,9 @@
-import {Request, Response} from "express";
+import { Request, Response } from "express";
 import { Videos } from "../entity/videos";
 
-const allVideos = async (req: Request, res: Response) =>{
+const allVideos = async (req: Request, res: Response) => {
 
-    try{
+    try {
         const videos = await Videos.find();
         res.json(videos);
     }
@@ -13,9 +13,9 @@ const allVideos = async (req: Request, res: Response) =>{
     }
 }
 
-const findVideos = async (req: Request, res: Response)  => {
-    try{
-        const video = await Videos.findOneOrFail({where: {uuid: req.params.uuid}});
+const findVideos = async (req: Request, res: Response) => {
+    try {
+        const video = await Videos.findOneOrFail({ where: { uuid: req.params.uuid } });
         res.json(video.path);
     }
     catch (err) {
@@ -25,7 +25,7 @@ const findVideos = async (req: Request, res: Response)  => {
 }
 
 const findVideosByCategory = async (req: Request, res: Response) => {
-    try{
+    try {
 
     }
     catch (err) {
@@ -35,11 +35,11 @@ const findVideosByCategory = async (req: Request, res: Response) => {
 }
 
 const addVideo = async (req: Request, res: Response) => {
-    try{
+    try {
 
         const { name, description, path } = req.body;
 
-        const video = Videos.create({name, description, path});
+        const video = Videos.create({ name, description, path });
 
         await video.save();
 

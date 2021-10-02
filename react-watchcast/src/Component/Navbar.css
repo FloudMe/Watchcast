@@ -1,43 +1,43 @@
-.navbar{
-    background: #000000 0% 0% no-repeat padding-box;
-    border: 1px solid #707070;
-    border-radius: 0px 0px 10px 10px;
-    opacity: 1;
-    height: 1.5em
+.navbar {
+  background: #000000 0% 0% no-repeat padding-box;
+  border: 1px solid #707070;
+  border-radius: 0px 0px 10px 10px;
+  opacity: 1;
+  height: 1.5em;
 }
 
 svg {
-    color: white;
-    position: absolute;
-    right: 1em;
+  color: white;
+  position: absolute;
+  right: 1em;
 }
 
-.settings{
-    display: block;
-    right: 2em;
-    position: absolute;
-    top: 1em;
+.settings {
+  display: block;
+  right: 2em;
+  position: absolute;
+  top: 1em;
 }
 
-a{
-    text-decoration: none;
-    color: rgb(0, 0, 0);
+a {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
 }
 
-ul{
-    list-style-type: none;
+ul {
+  list-style-type: none;
 }
 
-.searchBar{
-    top: 0%;
-    position: absolute;
-    left: 30%;
+.searchBar {
+  top: 0%;
+  position: absolute;
+  left: 30%;
 }
 
-.search{
-    width: 30em;
+.search {
+  width: 30em;
 }
 
-.searchButton{
-    position: sticky;
+.searchButton {
+  position: sticky;
 }

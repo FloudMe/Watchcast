@@ -16,7 +16,7 @@ class Register extends Component {
             lastName: '',
             country: '',
         };
-        
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
@@ -39,7 +39,7 @@ class Register extends Component {
                 last_name: this.state.lastName,
                 country: this.state.country,
             },
-            
+
         }
         console.log(userAll);
         axios.post(`http://localhost:4000/users/register`, userAll)
@@ -49,7 +49,7 @@ class Register extends Component {
                 alert("Udana rejestracja. Przeniesienie na stronę logowania");
                 this.props.history.push('/login');
             })
-            .catch(res =>{
+            .catch(res => {
                 console.error(res);
                 alert("Błąd z rejestracją. Powrót na stronę glówną");
                 this.props.history.push('/');
