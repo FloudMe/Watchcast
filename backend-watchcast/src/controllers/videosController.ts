@@ -5,7 +5,8 @@ const allVideos = async (req: Request, res: Response) => {
 
     try {
         const videos = await Videos.find();
-        res.json(videos);
+        console.log(videos);
+        res.json({videos: videos});
     }
     catch (err) {
         console.error(err)
@@ -16,7 +17,7 @@ const allVideos = async (req: Request, res: Response) => {
 const findVideos = async (req: Request, res: Response) => {
     try {
         const video = await Videos.findOneOrFail({ where: { uuid: req.params.uuid } });
-        res.json(video.path);
+        res.json({video: video});
     }
     catch (err) {
         console.error(err)

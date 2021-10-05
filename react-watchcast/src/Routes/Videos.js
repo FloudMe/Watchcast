@@ -1,33 +1,38 @@
 import React, { Component } from "react";
 import Navbar from "../Component/Navbar";
 import Video from "../Component/Video";
+import authentication from "../scripts/authentication";
+import axios from "axios";
 class Videos extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            videos: []
+            videos: [],
         }
+        this.onClick = this.onClick.bind(this);
     }
 
-    // componentDidMount(){
-    //     axios.get(`http://localhost:4000/users/login`)
-    //     .then(res => {
-    //         videos = res.data;
-    //     });
-    // }
+    componentDidMount(){
+        axios.get(`http://localhost:4000/videos`)
+        .then(res => {
+            const videosRes = res.data.videos;
+            this.setState({videos: videosRes});
+        });
+    }
+
+    onClick(uuid){
+            this.props.history.push("video/" + uuid);        
+    }
 
     render() {
         return (
             <div >
                 <Navbar />
-                {/* {this.state.videos.map( (uuid, name) =>{
-                    <div className='videosTable'>
-                        <Video key={uuid} imagePath = '' title={name}/>
-                    </div>
-                })} */}
-                <div className='videosTable'>
-                    <Video imagePath='' title='dupa' />
+                <div className='videos'>
+                {this.state.videos.map( video =>{
+                        return <Video uuid={video.uuid} imagePath = '' title={video.name} onClick={this.onClick} />
+                })}
                 </div>
             </div>
         )
