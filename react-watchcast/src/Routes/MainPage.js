@@ -2,7 +2,6 @@ import { React, Component } from "react";
 import './Background.css';
 import './MainPage.css';
 import WatchCast from "../Component/WatchCast";
-import axios from "axios";
 import Button from "../Component/Button";
 
 class MainPage extends Component {
@@ -10,6 +9,7 @@ class MainPage extends Component {
     constructor(props) {
         super(props);
     }
+    
     render() {
         return (
             <div id="SLIDE_BG">

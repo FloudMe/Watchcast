@@ -10,7 +10,7 @@ const Navbar = ({ userRole }) => {
 
     const buttonClick = (e) => {
         e.preventDefault();
-        if (search != '')
+        if (search !== '')
             alert(search);
     }
     return (

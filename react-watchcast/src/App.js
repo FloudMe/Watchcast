@@ -42,7 +42,7 @@ function App() {
               <VideoPlayer
                 {...props}
                 id={props.match.params.id}
-                setLoggedUser={setLoggedUser}
+                loggedUser={loggedUser}
               />
             )}
           ></Route>

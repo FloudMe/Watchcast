@@ -11,7 +11,7 @@ export const Details = ({ _email, _name, _lastName, _country }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        if (email == '' || name == '' || lastName == '' || country == '')
+        if (email === '' || name === '' || lastName === '' || country === '')
             alert('bledne dane');
         else {
             alert('gut');

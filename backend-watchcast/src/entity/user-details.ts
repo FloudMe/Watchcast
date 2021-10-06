@@ -29,8 +29,8 @@ export class UserDetails extends Model {
     @OneToMany(() => Videos, videos => videos.user)
     videos: Videos[];
 
-    @OneToMany(() => Comments, comments => comments.user)
-    comments: Comments[];
+    @OneToOne(() => Comments)
+    comments: Comments;
 
     @Column({
         type: "enum",

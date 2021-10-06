@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "../Component/Navbar";
 import Video from "../Component/Video";
-import authentication from "../scripts/authentication";
 import axios from "axios";
 class Videos extends Component {
 
@@ -9,6 +8,7 @@ class Videos extends Component {
         super(props);
         this.state = {
             videos: [],
+            comments: [],
         }
         this.onClick = this.onClick.bind(this);
     }
