@@ -4,9 +4,9 @@ import exampleData from '../Component/exampleData';
 import './About.css';
 
 class About extends Component {
-    constructor() {
-        super();
-    }
+    // constructor() {
+    //     super();
+    // }
 
     render() {
         return (

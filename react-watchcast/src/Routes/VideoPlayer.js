@@ -5,6 +5,7 @@ import Navbar from "../Component/Navbar";
 import axios from "axios";
 import Comment from "../Component/Comment";
 import authentication from "../scripts/authentication";
+import Video from "../Component/Video";
 
 class VideoPlayer extends Component {
     constructor(props) {
@@ -14,7 +15,9 @@ class VideoPlayer extends Component {
             video: [],
             comments: [],
             comment: '',
+            videos: [],
         }
+
         this.buttonClick = this.buttonClick.bind(this);
     }
 
@@ -23,15 +26,18 @@ class VideoPlayer extends Component {
         .then(res =>{
             const videoRes = res.data;
             this.setState(videoRes);
-            console.log(this.state.video.path)
         })
 
        axios.get(`http://localhost:4000/videos/comments/` + this.state.id)
         .then(res =>{
             const comments = res.data;
             this.setState({comments: comments});
-            
-            // console.log(this.props.loggedUser)
+        })
+
+        axios.get('http://localhost:4000/videos/videos/' + this.state.id)
+        .then(res => {
+            const videosRes = res.data;
+            this.setState({videos:videosRes})
         })
     }
 
@@ -55,6 +61,11 @@ class VideoPlayer extends Component {
                     />
                     <h2>{this.state.video.name}</h2>
                     <h1>{this.state.video.description}</h1>
+                </div>
+                <div className='scetionVideos'>
+                    {this.state.videos.map(video => {
+                        return <Video uuid={video.uuid} imagePath = '' title={video.name} />
+                    })}
                 </div>
                 <div className="sectionComment">
                     <input type='text' onChange={(e) => this.setState({comment: e.target.value})} />

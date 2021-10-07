@@ -7,7 +7,8 @@ const router = express.Router();
 router.get('/', videosController.allVideos);
 router.post("/", auth.authenticate, videosController.addComment);
 router.put('/add', videosController.addVideo);
-router.get('/comments/:uuid', videosController.getComments);
+router.get('/comments/:uuid', videosController.comments);
+router.get('/videos/:uuid', videosController.videosExcept)
 router.get('/:uuid', videosController.findVideos);
 
 

@@ -40,7 +40,7 @@ class Login extends Component {
                     localStorage.setItem("role", JSON.stringify(data.role));
                     localStorage.setItem("user", JSON.stringify(data.token));
 
-                    this.props.setLoggedUser(authentication.getCurrentUser());
+                    this.props.setLoggedUser(authentication.currentUser());
                     // userHasAuthenticated(true);
 
                     this.props.history.push('/videos');

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { Link } from "react-router-dom";
 
 const Button = ({ color, text, link }) => {
@@ -13,10 +12,6 @@ const Button = ({ color, text, link }) => {
       </button>
     </Link>
   )
-}
-
-Button.defaultProps = {
-  color: 'steelblue',
 }
 
 export default Button

@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { getConnection, getManager, getRepository } from "typeorm";
 import { Comments } from "../entity/comments";
+import { User } from "../entity/user";
 import { UserDetails } from "../entity/user-details";
 import { Videos } from "../entity/videos";
 
@@ -7,8 +9,8 @@ const allVideos = async (req: Request, res: Response) => {
 
     try {
         const videos = await Videos.find();
-        console.log(videos);
-        res.json({videos: videos});
+        
+        return res.json({videos: videos});
     }
     catch (err) {
         console.error(err)
@@ -19,7 +21,7 @@ const allVideos = async (req: Request, res: Response) => {
 const findVideos = async (req: Request, res: Response) => {
     try {
         const video = await Videos.findOneOrFail({ where: { uuid: req.params.uuid } });
-        res.json({video: video});
+        return res.json({video: video});
     }
     catch (err) {
         console.error(err)
@@ -46,7 +48,7 @@ const addVideo = async (req: Request, res: Response) => {
 
         await video.save();
 
-        res.status(200);
+        return res.status(200);
     }
     catch (err) {
         console.error(err)
@@ -54,18 +56,24 @@ const addVideo = async (req: Request, res: Response) => {
     }
 }
 
-const getComments = async(req: Request, res: Response) => {
+const comments = async(req: Request, res: Response) => {
     try {
         const videoId = req.params.uuid;
-        console.log(videoId);
+
         const video = await Videos.findOne({where: {uuid: videoId}})
 
-        const comments = await Comments.find({where: {video: video}})
-        // comments.map(comment => {
-        //     console.log(comment.user)
-        // })
-        // TODO RES USER ID
-        res.status(200).json(comments)
+        const comments = await getRepository(Comments)
+            .createQueryBuilder('comments')
+            .leftJoinAndSelect('comments.user', 'user_details')
+            .select([
+                'comments.uuid',
+                'comments.description',
+                'comments.created_at', 
+                'user_details.first_name'])
+            .where('comments.video = :id', {id: video.id})
+            .getMany()
+
+        return res.status(200).json(comments)
         
     }
     catch (err) {
@@ -77,24 +85,16 @@ const getComments = async(req: Request, res: Response) => {
 const addComment = async(req: Request, res: Response) => {
     try {
         const {video, description} = req.body;
-        const user = req.body.data.id;
-
-        console.log(user)
-
-        console.log(description)
+        const uuid = req.body.data.id;
         
         const video2 = await Videos.findOne({where: {uuid: video}})
-        const user2 = await UserDetails.findOne({where:{uuid:user}})
+        const userDetails  = await findDetails(uuid);
 
-        console.log(user2)
-        
         const comment = Comments.create({description})
         comment.video = video2;
-        comment.user = user2;
+        comment.user = userDetails;
         
         await comment.save()
-
-        console.log("gituwa ale czy na pewno")
 
         return res.status(200).json(comment);
     }
@@ -104,11 +104,34 @@ const addComment = async(req: Request, res: Response) => {
     }
 }
 
+const videosExcept = async(req: Request, res: Response) => {
+    try{
+        const uuid = req.params.uuid;
+        const videos = await Videos.find();
+        const videosNewTable = videos.filter((element) => {
+            return element.uuid !== uuid;
+        })
+
+        return res.status(200).json(videosNewTable);
+    }
+    catch (err) {
+        console.error(err)
+        return res.status(404).json({ video: 'videoExcept' });
+    }
+}
+
 module.exports = {
     allVideos,
     findVideos,
     findVideosByCategory,
     addVideo,
-    getComments,
-    addComment
+    comments,
+    addComment,
+    videosExcept
+}
+
+async function findDetails(uuid: any) {
+    const user = await User.findOneOrFail({ uuid });
+    const userDetails = await UserDetails.findOneOrFail({ user });
+    return userDetails;
 }

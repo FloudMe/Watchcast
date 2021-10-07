@@ -19,12 +19,10 @@ class UserDetails extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:4000/users/`, { headers: { 'Authorization': authentication.authenticationHeader() } }/* + uuid*/).then(res => {
+        axios.get(`http://localhost:4000/users/`, { headers: { 'Authorization': authentication.authenticationHeader() } }).then(res => {
             const user = res.data;
             if (user === "Brak tokena")
                 return this.props.history.push("/");
-
-            console.log('Im in users');
 
             this.setState({ email: user.email, name: user.first_name, lastName: user.last_name, country: user.country });
         });

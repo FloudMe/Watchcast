@@ -14,17 +14,17 @@ const logout = () => {
 
 }
 
-const getCurrentUser = () => {
+const currentUser = () => {
     return JSON.parse(localStorage.getItem("user"));
 };
 
-const getUserRole = () => {
+const userRole = () => {
     return JSON.parse(localStorage.getItem("role"));
 }
 
 export default {
     authenticationHeader,
     logout,
-    getCurrentUser,
-    getUserRole
+    currentUser,
+    userRole
 }

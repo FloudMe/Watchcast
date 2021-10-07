@@ -16,8 +16,8 @@ function App() {
   const [userRole, setUserRole] = useState(null);
 
   useEffect(() => {
-    setLoggedUser(authentication.getCurrentUser());
-    setUserRole(authentication.getUserRole());
+    setLoggedUser(authentication.currentUser());
+    setUserRole(authentication.userRole());
   });
 
   return (

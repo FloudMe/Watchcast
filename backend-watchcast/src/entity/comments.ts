@@ -5,7 +5,7 @@ import { Videos } from "./videos";
 
 @Entity()
 export class Comments extends Model {
-    @OneToOne(() => UserDetails)
+    @ManyToOne(() => UserDetails, userDetails => userDetails.comments)
     @JoinColumn()
     user: UserDetails;
 

@@ -10,7 +10,8 @@ class Videos extends Component {
             videos: [],
             comments: [],
         }
-        this.onClick = this.onClick.bind(this);
+        // this.onClick = this.onClick.bind(this);
+        
     }
 
     componentDidMount(){
@@ -20,18 +21,14 @@ class Videos extends Component {
             this.setState({videos: videosRes});
         });
     }
-
-    onClick(uuid){
-            this.props.history.push("video/" + uuid);        
-    }
-
+    
     render() {
         return (
             <div >
                 <Navbar />
                 <div className='videos'>
                 {this.state.videos.map( video =>{
-                        return <Video uuid={video.uuid} imagePath = '' title={video.name} onClick={this.onClick} />
+                        return <Video uuid={video.uuid} imagePath = '' title={video.name}/>
                 })}
                 </div>
             </div>
