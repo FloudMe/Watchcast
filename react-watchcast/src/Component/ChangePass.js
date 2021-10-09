@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import axios from "axios";
+import authentication from '../scripts/authentication';
 
 const ChangePass = () => {
     const [oldPass, setOldPass] = useState('');
@@ -10,18 +11,7 @@ const ChangePass = () => {
         e.preventDefault();
 
         if (newPass === checkNewPass) {
-            axios.put(`http://localhost:4000/users/changePass` /*+ uuid*/, { "password": newPass })
-                .then(res => {
-                    if (res.status) {
-                        alert("Pomyslnie zmieniono haslo");
-
-                        setOldPass('');
-                        setNewPass('');
-                        setCheckNewPass('');
-                    }
-                    else
-                        alert("Nie zmienono hasła");
-                })
+            axios.put(global.config.backendPath + `users/changePass`, { "newPassword": newPass, "oldPassword": oldPass }, {headers: { 'authorization': authentication.authenticationHeader() }})
         }
     }
 

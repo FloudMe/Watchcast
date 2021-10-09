@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { Component } from "react";
 import Button from "../Component/Button";
 import WatchCast from "../Component/WatchCast";
+import config from "../config";
 import authentication from "../scripts/authentication";
 import './Background.css';
 import "./Login.css";
@@ -31,10 +32,9 @@ class Login extends Component {
             password: this.state.password
         }
 
-        axios.post(`http://localhost:4000/users/login`, user)
+        axios.post(config.backendPath + `users/login`, user)
             .then(res => {
                 const data = res.data;
-                alert(data);
                 if (data !== "Wrong password!" && data !== "User does not exist") {
 
                     localStorage.setItem("role", JSON.stringify(data.role));

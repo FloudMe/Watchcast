@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import authentication from '../scripts/authentication';
 import './Navbar.css';
 
-const Navbar = ({ userRole }) => {
+const Navbar = () => {
     let [show, setShow] = useState(false);
     let [search, setSearch] = useState('');
+
+    const userRole = authentication.userRole();
 
     const buttonClick = (e) => {
         e.preventDefault();
@@ -29,11 +31,12 @@ const Navbar = ({ userRole }) => {
                     <div className='settings'>
                         <ul>
                             <Link to='/user-details'><li>User</li></Link>
+                            { userRole === 'admin' && <Link to='/change-role'><li>Users role</li></Link>} 
                             <Link to='/' onClick={() => {
                                 authentication.logout();
 
                             }}><li>Logout</li></Link>
-                            {/* {userRole === 'admin' && <Link to='/change-role'><li>User</li></Link>} */}
+                            
                         </ul>
                     </div>}
 

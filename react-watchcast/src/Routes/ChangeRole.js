@@ -1,5 +1,10 @@
+import axios from "axios";
 import React, { Component } from "react";
+import Form from "../Component/Form";
 import Navbar from "../Component/Navbar";
+import UserForChange from "../Component/UserForChange";
+import config from "../config";
+import authentication from "../scripts/authentication";
 
 class ChangeRole extends Component {
 
@@ -8,19 +13,52 @@ class ChangeRole extends Component {
         
         this.state = {
             userId: '',
-            users: []
+            adminId: '',
+            users: [],
+            admins: [],
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmitUser = this.handleSubmitUser.bind(this);
+        this.handleSubmitAdmin = this.handleSubmitAdmin.bind(this);
+        this.axiosPut = this.axiosPut.bind(this);
     }
 
-    handleChange = ({ target }) => {
-        const userId = target.value;
-        this.setState({ userId });
+    componentDidMount(){
+        if(authentication.userRole() === "admin"){
+            axios.get(config.backendPath + `users/allUsers`, {headers: { 'authorization': authentication.authenticationHeader() }})
+                .then(res => {
+                    const usersRes = res.data.users;
+                    const adminsRes = res.data.admins;
+                    
+                    this.setState({userId: usersRes[0].uuid});
+                    this.setState({adminId: adminsRes[0].uuid});
+                    
+                    this.setState({users: usersRes});
+                    this.setState({admins: adminsRes});
+                })
+        }else{
+            window.location.href = "/videos";
+        }
+    }
+
+    handleChange = ( { target } ) => {
+        const uuid = target.value;
+
+        (target.className === "users") ? this.setState({userId: uuid}) : this.setState({adminId: uuid});
     };
 
-    handleSubmit(event) {
+    handleSubmitUser(event) {
+        this.axiosPut(this.state.userId, event);
+    }
 
+    handleSubmitAdmin(event) {
+        this.axiosPut(this.state.adminId, event);
+        
+    }
+
+    axiosPut(uuid, event){
+        axios.put(config.backendPath + `users/changeRole`, {"user": uuid }, {headers: { 'authorization': authentication.authenticationHeader() }});
+        event.preventDefault();
     }
 
     render() {
@@ -28,15 +66,23 @@ class ChangeRole extends Component {
             <div >
                 <Navbar />
                 <div className='changeRole'>
-                    <form onSubmit={this.handleSubmit}>
-                        <select className='users' value='' onChange={this.handleChange}>
+                    <Form 
+                        classNameSelect='users'
+                        classNameInput='userRoleSubmit'
+                        onSubmit={this.handleSubmitUser}
+                        value={this.state.userId}
+                        onChange={this.handleChange}
+                        data={this.state.users}
+                    />
 
-                        </select>
-                        <p>
-                            Potwierdz zmiane
-                        </p>
-                        <input className="userRoleSubmit" type="submit" value="Zmien" />
-                    </form>
+                    <Form 
+                        classNameSelect='admins'
+                        classNameInput='adminRoleSubmit'
+                        onSubmit={this.handleSubmitAdmin}
+                        value={this.state.adminId}
+                        onChange={this.handleChange}
+                        data={this.state.admins}
+                    />
                 </div>
             </div>
         )

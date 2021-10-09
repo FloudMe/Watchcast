@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "../Component/Navbar";
 import Video from "../Component/Video";
 import axios from "axios";
+import config from "../config";
 class Videos extends Component {
 
     constructor(props) {
@@ -15,7 +16,7 @@ class Videos extends Component {
     }
 
     componentDidMount(){
-        axios.get(`http://localhost:4000/videos`)
+        axios.get(config.backendPath + `videos`)
         .then(res => {
             const videosRes = res.data.videos;
             this.setState({videos: videosRes});

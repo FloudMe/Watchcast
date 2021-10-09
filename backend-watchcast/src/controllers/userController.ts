@@ -57,10 +57,24 @@ const findUser = async (req: Request, res: Response) => {
 
         const resp = { email: user.email, first_name: userDetails.first_name, last_name: userDetails.last_name, country: userDetails.country };
         // const resp = {email: user.email, userDetails};
-        return res.json(resp);
+        return res.status(200).json(resp);
     } catch (err) {
         console.error(err)
         return res.status(404).json({ user: 'User not found' })
+    }
+}
+
+const allUsers = async (req: Request, res: Response) => {
+    try{
+        const allUsers = await UserDetails.find();
+        
+        const users = allUsers.filter(user => user.role === "user");
+        const admins = allUsers.filter(user => user.role === "admin");
+
+        return res.status(200).json({users: users, admins:admins})
+    } catch (err) {
+        console.error(err)
+        return res.status(404).json({ user: 'Users not found' })
     }
 }
 
@@ -77,15 +91,38 @@ const updateUser = async (req: Request, res: Response) => {
     }
 }
 
+const updateRole = async (req: Request, res: Response) => {
+    const uuid = req.body.user;
+
+    try {
+        const user_details = await UserDetails.findOneOrFail({where: {uuid: uuid}});
+        user_details.role = (user_details.role === "user") ? "admin" : "user" ;
+        user_details.save();
+
+        return res.status(200)
+    }
+    catch (err) {
+        console.error(err)
+        return res.status(404).json({ user: 'User not found' })
+    }
+}
+
 const changePass = async (req: Request, res: Response) => {
-    // const uuid = req.params.uuid;
     const uuid = req.body.data.id;
 
     try {
         const user = await User.findOneOrFail({ uuid });
-        const pass = await bcrypt.hash(req.body.password, 10);
+        const newPass = await bcrypt.hash(req.body.newPassword, 10);
 
-        bcrypt.compare(req.body.password, user.password, changePassword(res, user, pass));
+        bcrypt.compare(req.body.oldPassword, user.password, (err, result) => {
+            if (err) {
+                return;
+            } // TODO CHECK IF IS NECESSERY
+            if (result) {
+                user.password = newPass;
+                user.save();
+            }
+        });
     }
     catch (err) {
         console.error(err)
@@ -99,38 +136,28 @@ module.exports = {
     login,
     remove,
     findUser,
+    allUsers,
     updateUser,
+    updateRole,
     changePass
 };
 
 async function updateUserDetails(uuid: any, req) {
     const { user, userDetails } = await findUserAndDetails(uuid);
 
-    user.email = req.body.email;
+    user.email = req.body.user.email;
 
     await user.save();
 
-    userDetails.first_name = req.body.first_name;
-    userDetails.last_name = req.body.last_name;
-    userDetails.country = req.body.country;
+    userDetails.first_name = req.body.user.first_name;
+    userDetails.last_name = req.body.user.last_name;
+    userDetails.country = req.body.user.country;
 
     await userDetails.save();
 }
 
 function changePassword(res: Response<any, Record<string, any>>, user: User, pass: any): any {
-    return (err, result) => {
-        if (err) {
-            return res.json(err);
-        }
-        if (result) {
-
-            user.password = pass;
-            user.save();
-
-            return res.json('Gucci!');
-        }
-        return res.status(404).json('Wrong password!');
-    };
+    
 }
 
 async function findUserAndDetails(uuid: any) {

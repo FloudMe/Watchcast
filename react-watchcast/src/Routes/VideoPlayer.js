@@ -6,6 +6,7 @@ import axios from "axios";
 import Comment from "../Component/Comment";
 import authentication from "../scripts/authentication";
 import Video from "../Component/Video";
+import config from "../config";
 
 class VideoPlayer extends Component {
     constructor(props) {
@@ -22,19 +23,19 @@ class VideoPlayer extends Component {
     }
 
     componentDidMount(){
-        axios.get(`http://localhost:4000/videos/` + this.state.id)
+        axios.get(config.backendPath + `videos/` + this.state.id)
         .then(res =>{
             const videoRes = res.data;
             this.setState(videoRes);
         })
 
-       axios.get(`http://localhost:4000/videos/comments/` + this.state.id)
+       axios.get(config.backendPath + `videos/comments/` + this.state.id)
         .then(res =>{
             const comments = res.data;
             this.setState({comments: comments});
         })
 
-        axios.get('http://localhost:4000/videos/videos/' + this.state.id)
+        axios.get(config.backendPath + 'videos/videos/' + this.state.id)
         .then(res => {
             const videosRes = res.data;
             this.setState({videos:videosRes})
@@ -42,8 +43,7 @@ class VideoPlayer extends Component {
     }
 
     buttonClick(){
-        alert(authentication.authenticationHeader())
-        axios.post(`http://localhost:4000/videos/`, {"video": this.state.id, "description": this.state.comment}, {headers: { 'authorization': authentication.authenticationHeader() }})
+        axios.post(config.backendPath + `videos/`, {"video": this.state.id, "description": this.state.comment}, {headers: { 'authorization': authentication.authenticationHeader() }})
         .then(res => {
             this.state.comments.push(res.data);
             this.setState({reload: true});

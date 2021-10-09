@@ -3,6 +3,7 @@ import "./Background.css"
 import axios from "axios";
 import WatchCast from "../Component/WatchCast";
 import Button from "../Component/Button";
+import config from "../config";
 
 class Register extends Component {
 
@@ -42,7 +43,7 @@ class Register extends Component {
 
         }
 
-        axios.post(`http://localhost:4000/users/register`, userAll)
+        axios.post(config.backendPath + `users/register`, userAll)
             .then(res => {
                 alert("Udana rejestracja. Przeniesienie na stronę logowania");
                 this.props.history.push('/login');

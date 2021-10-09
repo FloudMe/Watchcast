@@ -3,6 +3,7 @@ import { Component, React } from "react";
 import ChangePass from "../Component/ChangePass";
 import { Details } from "../Component/Details";
 import Navbar from "../Component/Navbar";
+import config from "../config";
 import authentication from "../scripts/authentication";
 
 class UserDetails extends Component {
@@ -19,7 +20,7 @@ class UserDetails extends Component {
     }
 
     componentDidMount() {
-        axios.get(`http://localhost:4000/users/`, { headers: { 'Authorization': authentication.authenticationHeader() } }).then(res => {
+        axios.get(config.backendPath + `users/`, { headers: { 'Authorization': authentication.authenticationHeader() } }).then(res => {
             const user = res.data;
             if (user === "Brak tokena")
                 return this.props.history.push("/");
