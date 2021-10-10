@@ -11,26 +11,31 @@ class Videos extends Component {
             videos: [],
             comments: [],
         }
-        // this.onClick = this.onClick.bind(this);
-        
     }
 
-    componentDidMount(){
+    componentDidMount() {
         axios.get(config.backendPath + `videos`)
-        .then(res => {
-            const videosRes = res.data.videos;
-            this.setState({videos: videosRes});
-        });
+            .then(res => {
+                const videosRes = res.data.videos;
+                this.setState({ videos: videosRes });
+            })
+            .catch(res => {
+                alert("Błąd z wideo");
+            })
     }
-    
+
     render() {
         return (
             <div >
                 <Navbar />
                 <div className='videos'>
-                {this.state.videos.map( video =>{
-                        return <Video uuid={video.uuid} imagePath = '' title={video.name}/>
-                })}
+                    {this.state.videos.map(video => {
+                        console.log(video)
+                        return <Video uuid={video.uuid}
+                            title={video.name}
+                            description={video.description}
+                            created_at={video.created_at} />
+                    })}
                 </div>
             </div>
         )

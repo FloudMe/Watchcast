@@ -1,0 +1,27 @@
+.userDetails {
+  padding: 3em;
+}
+
+.changePass {
+  margin-top: 2em;
+}
+
+.details,
+.changePass {
+  border-style: double;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+.details .user,
+.changePass .pass {
+  padding: 1em;
+}
+
+.formDetails,
+.formChangePass {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  margin-left: 5em;
+}

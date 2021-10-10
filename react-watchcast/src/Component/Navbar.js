@@ -19,24 +19,21 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="links">
 
-                <Link to={"/videos"} style={{ marginLeft: "1em", color: '#FFF', textDecoration: 'none' }}>WatchCast</Link>
+                <Link className='watchcast'
+                    to={"/videos"}
+                    style={{ marginLeft: "1em", color: '#FFF', textDecoration: 'none' }}>WatchCast</Link>
 
-                <div className='searchBar'>
-                    <input className='search' type='text' onChange={(e) => setSearch(e.target.value)} />
-                    <button className='searchButton' type="button" onClick={buttonClick}>Click</button>
-                </div>
-
-                <FiSettings onClick={() => setShow(!show)} />
+                <FiSettings onClick={() => setShow(!show)} viewBox="0 0 20 20" />
                 {show &&
                     <div className='settings'>
                         <ul>
                             <Link to='/user-details'><li>User</li></Link>
-                            { userRole === 'admin' && <Link to='/change-role'><li>Users role</li></Link>} 
+                            {userRole === 'admin' && <Link to='/change-role'><li>Users role</li></Link>}
                             <Link to='/' onClick={() => {
                                 authentication.logout();
 
                             }}><li>Logout</li></Link>
-                            
+
                         </ul>
                     </div>}
 

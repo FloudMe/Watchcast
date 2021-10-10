@@ -5,11 +5,6 @@ import WatchCast from "../Component/WatchCast";
 import Button from "../Component/Button";
 
 class MainPage extends Component {
-
-    // constructor(props) {
-    //     super(props);
-    // }
-    
     render() {
         return (
             <div id="SLIDE_BG">
@@ -18,9 +13,11 @@ class MainPage extends Component {
                     <div className="napisLogin">
                         Dołącz i oglądaj filmy jakie chcesz
                     </div>
-                    <Button text='login' link='/login' />
-                    <div className="brakKonta">Nie masz konta, zapisz się!</div>
-                    <Button text='register' link='/register' />
+                    <Button className="login" text='login' link='/login' />
+                    <div className="brakKonta">
+                        Nie masz konta, zapisz się!
+                    </div>
+                    <Button className="register" text='register' link='/register' />
                 </div>
             </div>
         )

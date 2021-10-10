@@ -1,0 +1,37 @@
+.changeRole {
+  display: flex;
+  padding: 3em;
+}
+
+.changeRole > div {
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 1em;
+  border-style: dotted;
+  padding: 3em;
+}
+
+.adminsSelect,
+.usersSelect {
+    width: 13em;
+    position: relative;
+    font-family: Arial;
+
+    padding: 0.5em 1.5em;
+    border: 1px solid transparent;
+    cursor: pointer;
+    grid-template-areas: "select";
+}
+
+.usersSelect {
+    background-color:antiquewhite;
+}
+
+.adminsSelect {
+    background-color:cornsilk;
+}
+
+.adminsSelect::before,
+.adminsSelect::after {
+  box-sizing: border-box;
+}

@@ -1,0 +1,75 @@
+.btn,
+.loginFormSubmit,
+.registerFormSubmit,
+.newPasswordSubmit,
+.newDetailsSubmit {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 1em;
+  margin: 1em 1em;
+  width: 8em;
+}
+
+.btn {
+  margin-left: 3em;
+}
+
+.btn:hover,
+.loginFormSubmit:hover,
+.registerFormSubmit:hover,
+.newPasswordSubmit:hover,
+.newDetailsSubmit:hover {
+  background-color: #4c9b50;
+}
+
+.btn:focus,
+.loginFormSubmit:focus,
+.registerFormSubmit:focus,
+.newPasswordSubmit:focus .newDetailsSubmit:focus {
+  background-color: #4c9150;
+}
+
+.registerFormSubmit,
+.loginFormSubmit {
+  margin-left: 15em;
+}
+
+/* .detailsFormInput,
+.changePassFormInput {
+  width: 90%;
+} */
+
+.loginForm,
+.registerForm {
+  display: inline-grid;
+  padding: 1em;
+  width: 80%;
+  text-align: left;
+}
+
+.loginFormInput,
+.registerFormInput,
+.detailsFormInput,
+.changePassFormInput,
+.textComment {
+  margin-bottom: 2em;
+  border: none;
+  border-bottom: 2px solid #0004ff;
+  background-color: unset;
+}
+
+.loginFormSubmit,
+.registerFormSubmit,
+.newDetailsSubmit,
+.newPasswordSubmit {
+  width: 20%;
+  margin-left: 16em;
+}
+

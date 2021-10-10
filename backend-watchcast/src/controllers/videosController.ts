@@ -9,8 +9,8 @@ const allVideos = async (req: Request, res: Response) => {
 
     try {
         const videos = await Videos.find();
-        
-        return res.json({videos: videos});
+
+        return res.json({ videos: videos });
     }
     catch (err) {
         console.error(err)
@@ -20,8 +20,12 @@ const allVideos = async (req: Request, res: Response) => {
 
 const findVideos = async (req: Request, res: Response) => {
     try {
-        const video = await Videos.findOneOrFail({ where: { uuid: req.params.uuid } });
-        return res.json({video: video});
+        const videoUuid = req.params.uuid
+        const video = await Videos.findOneOrFail({ where: { uuid: videoUuid } });
+        const _comments = await comments(videoUuid);
+        const _anotherVideos = await anotherVideos(videoUuid);
+
+        return res.json({ video: video, comments:_comments, anotherVideos: _anotherVideos });
     }
     catch (err) {
         console.error(err)
@@ -56,44 +60,18 @@ const addVideo = async (req: Request, res: Response) => {
     }
 }
 
-const comments = async(req: Request, res: Response) => {
+const addComment = async (req: Request, res: Response) => {
     try {
-        const videoId = req.params.uuid;
-
-        const video = await Videos.findOne({where: {uuid: videoId}})
-
-        const comments = await getRepository(Comments)
-            .createQueryBuilder('comments')
-            .leftJoinAndSelect('comments.user', 'user_details')
-            .select([
-                'comments.uuid',
-                'comments.description',
-                'comments.created_at', 
-                'user_details.first_name'])
-            .where('comments.video = :id', {id: video.id})
-            .getMany()
-
-        return res.status(200).json(comments)
-        
-    }
-    catch (err) {
-        console.error(err)
-        return res.status(404).json({ video: 'comments' });
-    }
-}
-
-const addComment = async(req: Request, res: Response) => {
-    try {
-        const {video, description} = req.body;
+        const { video, description } = req.body;
         const uuid = req.body.data.id;
-        
-        const video2 = await Videos.findOne({where: {uuid: video}})
-        const userDetails  = await findDetails(uuid);
 
-        const comment = Comments.create({description})
+        const video2 = await Videos.findOne({ where: { uuid: video } })
+        const userDetails = await findDetails(uuid);
+
+        const comment = Comments.create({ description })
         comment.video = video2;
         comment.user = userDetails;
-        
+
         await comment.save()
 
         return res.status(200).json(comment);
@@ -104,30 +82,38 @@ const addComment = async(req: Request, res: Response) => {
     }
 }
 
-const videosExcept = async(req: Request, res: Response) => {
-    try{
-        const uuid = req.params.uuid;
-        const videos = await Videos.find();
-        const videosNewTable = videos.filter((element) => {
-            return element.uuid !== uuid;
-        })
-
-        return res.status(200).json(videosNewTable);
-    }
-    catch (err) {
-        console.error(err)
-        return res.status(404).json({ video: 'videoExcept' });
-    }
-}
-
 module.exports = {
     allVideos,
     findVideos,
     findVideosByCategory,
     addVideo,
-    comments,
-    addComment,
-    videosExcept
+    addComment
+}
+
+async function comments(videoId) {
+    const video = await Videos.findOne({ where: { uuid: videoId } })
+
+    const comments = await getRepository(Comments)
+        .createQueryBuilder('comments')
+        .leftJoinAndSelect('comments.user', 'user_details')
+        .select([
+            'comments.uuid',
+            'comments.description',
+            'comments.created_at',
+            'user_details.first_name'])
+        .where('comments.video = :id', { id: video.id })
+        .getMany()
+
+    return comments;
+}
+
+async function anotherVideos(videoId) {
+    const videos = await Videos.find();
+    const videosNewTable = videos.filter((element) => {
+        return element.uuid !== videoId;
+    })
+
+    return videosNewTable;
 }
 
 async function findDetails(uuid: any) {

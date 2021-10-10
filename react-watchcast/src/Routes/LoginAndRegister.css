@@ -1,4 +1,5 @@
-.loginRegister {
+.login,
+.register {
   background: #ffffffcc 0% 0% no-repeat padding-box;
   border: 1px solid #707070;
   border-radius: 37px;
@@ -12,7 +13,12 @@
   height: 40%;
 }
 
-.loginRegisterForm {
-  display: inline-grid;
-  padding: 1em;
+.toRegister,
+.toLogin {
+  display: block;
+}
+
+.register {
+  top: 18%;
+  height: 68%;
 }

@@ -11,15 +11,36 @@ const ChangePass = () => {
         e.preventDefault();
 
         if (newPass === checkNewPass) {
-            axios.put(global.config.backendPath + `users/changePass`, { "newPassword": newPass, "oldPassword": oldPass }, {headers: { 'authorization': authentication.authenticationHeader() }})
+            axios.put(global.config.backendPath + `users/changePass`,
+                { "newPassword": newPass, "oldPassword": oldPass },
+                { headers: { 'authorization': authentication.authenticationHeader() } })
+                .catch(res => {
+                    console.log(res)
+                })
         }
     }
 
     return (
-        <form onSubmit={checkPassword}>
-            <input className="oldPassword" type="password" name="oldPassword" id="oldPassword" placeholder="Old password" value={oldPass} onChange={(e) => setOldPass(e.target.value)} />
-            <input className="newPassword" type="password" name="newPassword" id="newPassword" placeholder="New password" value={newPass} onChange={(e) => setNewPass(e.target.value)} />
-            <input className="repeatNewPassword"
+        <form className="formChangePass" onSubmit={checkPassword}>
+            Old password: <input className="oldPassword"
+                className='changePassFormInput'
+                type="password"
+                name="oldPassword"
+                id="oldPassword"
+                placeholder="Old password"
+                value={oldPass}
+                onChange={(e) => setOldPass(e.target.value)} />
+            New password: <input className="newPassword"
+                className='changePassFormInput'
+                type="password"
+                name="newPassword"
+                id="newPassword"
+                placeholder="New password"
+                value={newPass}
+                onChange={(e) => setNewPass(e.target.value)} />
+            Repeat new password:<input className="repeatNewPassword"
+                style={newPass !== checkNewPass ? { borderBottomColor: "red" } : {}}
+                className='changePassFormInput'
                 type="password"
                 name="repeatNewPassword"
                 id="repeatNewPassword"

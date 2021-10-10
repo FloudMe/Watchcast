@@ -5,7 +5,8 @@ import WatchCast from "../Component/WatchCast";
 import config from "../config";
 import authentication from "../scripts/authentication";
 import './Background.css';
-import "./Login.css";
+import "./LoginAndRegister.css";
+import "./btnAndForm.css"
 
 class Login extends Component {
 
@@ -58,16 +59,23 @@ class Login extends Component {
         return (
             <div id="SLIDE_BG">
                 <WatchCast />
-                <div className="loginRegister">
-                    <form className="loginRegisterForm" onSubmit={this.handleSubmit}>
-                        {/* <h2>Zaloguj się!</h2> */}
-                        <input className="loginRegisterFormInput" type="text" name="email" id="email" placeholder="E-mail" onChange={this.handleChange} />
-                        <input className="loginRegisterFormInput" type="password" name="password" id="password" placeholder="Hasło" onChange={this.handleChange} />
-                        <input className="loginRegisterSubmit" type="submit" value="Sign in" />
+                <div className="login">
+                    <form className="loginForm" onSubmit={this.handleSubmit}>
+                        E-mail:<input className="loginFormInput"
+                            type="text"
+                            name="email"
+                            id="email"
+                            placeholder="E-mail"
+                            onChange={this.handleChange} />
+                        Password:<input className="loginFormInput"
+                            type="password"
+                            name="password"
+                            id="password" placeholder="Hasło"
+                            onChange={this.handleChange} />
+                        <input className="loginFormSubmit" type="submit" value="Sign in" />
                     </form>
-                    <div className="toLoginRegister">
-                        <h2 className="toLR">Nie masz konta? Załóż dzisiaj!</h2>
-                        {/* <Link to="/register">Załóż konto</Link> */}
+                    <div className="toRegister">
+                        <h2 className="toR">Nie masz konta? Załóż dzisiaj!</h2>
                         <Button text='register' link='/register' />
                     </div>
                 </div>

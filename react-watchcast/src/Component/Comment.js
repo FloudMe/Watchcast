@@ -1,21 +1,16 @@
 import React from 'react'
+import formatedDate from '../scripts/date'
 
 const Comment = ({ comment }) => {
-    const options = { 
-        year: 'numeric', 
-        weekday: 'long', 
-        month: 'long', 
-        day: 'numeric', 
-        hour : 'numeric', 
-        minute: 'numeric', 
-        second: 'numeric'
-    }
-    const date = new Date(comment.created_at)
-    const formatedDate = date.toLocaleDateString("en-UK", options)
+    const date = formatedDate(comment.created_at)
+
     return (
-        <div>
-            <h1>{comment.user.first_name} {formatedDate}</h1>
-            <h1>{comment.description}</h1>
+        <div className='comment'>
+            <div className='user'>
+                <h1>{comment.user.first_name}</h1>
+                <p>{date}</p>
+            </div>
+            <h2>{comment.description}</h2>
         </div>
     )
 }

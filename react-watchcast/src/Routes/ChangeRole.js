@@ -2,15 +2,15 @@ import axios from "axios";
 import React, { Component } from "react";
 import Form from "../Component/Form";
 import Navbar from "../Component/Navbar";
-import UserForChange from "../Component/UserForChange";
 import config from "../config";
 import authentication from "../scripts/authentication";
+import './ChangeRole.css'
 
 class ChangeRole extends Component {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             userId: '',
             adminId: '',
@@ -23,28 +23,33 @@ class ChangeRole extends Component {
         this.axiosPut = this.axiosPut.bind(this);
     }
 
-    componentDidMount(){
-        if(authentication.userRole() === "admin"){
-            axios.get(config.backendPath + `users/allUsers`, {headers: { 'authorization': authentication.authenticationHeader() }})
+    componentDidMount() {
+        if (authentication.userRole() === "admin") {
+            axios.get(config.backendPath + `users/allUsers`,
+                { headers: { 'authorization': authentication.authenticationHeader() } })
                 .then(res => {
                     const usersRes = res.data.users;
                     const adminsRes = res.data.admins;
-                    
-                    this.setState({userId: usersRes[0].uuid});
-                    this.setState({adminId: adminsRes[0].uuid});
-                    
-                    this.setState({users: usersRes});
-                    this.setState({admins: adminsRes});
+
+                    this.setState({ userId: usersRes[0].uuid });
+                    this.setState({ adminId: adminsRes[0].uuid });
+
+                    this.setState({ users: usersRes });
+                    this.setState({ admins: adminsRes });
                 })
-        }else{
+                .catch(res => {
+                    alert("Błąd pobrania userów");
+                })
+        } else {
             window.location.href = "/videos";
         }
     }
 
-    handleChange = ( { target } ) => {
+    handleChange = ({ target }) => {
         const uuid = target.value;
 
-        (target.className === "users") ? this.setState({userId: uuid}) : this.setState({adminId: uuid});
+        (target.className === "usersSelect") ?
+            this.setState({ userId: uuid }) : this.setState({ adminId: uuid });
     };
 
     handleSubmitUser(event) {
@@ -53,12 +58,16 @@ class ChangeRole extends Component {
 
     handleSubmitAdmin(event) {
         this.axiosPut(this.state.adminId, event);
-        
+
     }
 
-    axiosPut(uuid, event){
-        axios.put(config.backendPath + `users/changeRole`, {"user": uuid }, {headers: { 'authorization': authentication.authenticationHeader() }});
-        event.preventDefault();
+    axiosPut(uuid, event) {
+        axios.put(config.backendPath + `users/changeRole`,
+            { "user": uuid },
+            { headers: { 'authorization': authentication.authenticationHeader() } })
+            .catch(res => {
+                alert("Nie zmieniono roli");
+            })
     }
 
     render() {
@@ -66,8 +75,9 @@ class ChangeRole extends Component {
             <div >
                 <Navbar />
                 <div className='changeRole'>
-                    <Form 
-                        classNameSelect='users'
+                    <Form classname="users"
+                        description='User upgrade to admin'
+                        classNameSelect='usersSelect'
                         classNameInput='userRoleSubmit'
                         onSubmit={this.handleSubmitUser}
                         value={this.state.userId}
@@ -75,8 +85,9 @@ class ChangeRole extends Component {
                         data={this.state.users}
                     />
 
-                    <Form 
-                        classNameSelect='admins'
+                    <Form classname='admins'
+                        description='Admin downgrade to user'
+                        classNameSelect='adminsSelect'
                         classNameInput='adminRoleSubmit'
                         onSubmit={this.handleSubmitAdmin}
                         value={this.state.adminId}

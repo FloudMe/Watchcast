@@ -4,17 +4,12 @@ import exampleData from '../Component/exampleData';
 import './About.css';
 
 class About extends Component {
-    // constructor() {
-    //     super();
-    // }
-
     render() {
         return (
             <div>
                 <Navbar />
                 <div className="labels-container">
                     {exampleData.labels.map((label1) => {
-
                         return (
                             <div className="support-box" key={label1.id}>
                                 <input type="checkbox" id={label1.id_checkbox} />

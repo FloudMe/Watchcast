@@ -1,20 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import imageSrc from '../public/play.jpg'
+import formatedDate from '../scripts/date'
+import './Video.css'
 
-const Video = ({ uuid, imagePath, title, onClick }) => {
+const Video = ({ uuid, title, description, created_at }) => {
+    const date = formatedDate(created_at)
+
     return (
-        <Link to={{pathname: '/video/' + uuid}} onClick={refreshPage}>
-        <div className={`video`} >
-            {/* <img className={name} src={require(imagePath)} /> */}
-            <h1>{title}</h1>
-        </div>
+        <Link className='videosLink' to={{ pathname: '/video/' + uuid }} onClick={refreshPage}>
+            <img className="videoImg" src={imageSrc} />
+            <div className='videoText' >
+                <h1>{title}</h1>
+                <div className='descriptionAndCreated_at'>
+                    <div className='description'>
+                        {description}
+                    </div>
+                    <div className='created_at'>
+                        {date}
+                    </div>
+                </div>
+
+            </div>
         </Link>
     )
 }
 
 function refreshPage() {
-    setTimeout(()=>{
+    setTimeout(() => {
         window.location.reload(false);
     });
 }

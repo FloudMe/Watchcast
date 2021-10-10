@@ -3,7 +3,11 @@
   border: 1px solid #707070;
   border-radius: 0px 0px 10px 10px;
   opacity: 1;
-  height: 1.5em;
+  height: 2.5em;
+}
+
+.watchcast {
+  font-size: x-large;
 }
 
 svg {
@@ -14,9 +18,12 @@ svg {
 
 .settings {
   display: block;
-  right: 2em;
+  right: 0em;
   position: absolute;
-  top: 1em;
+  top: 1.5em;
+  background-color: snow;
+  border-style: outset;
+  border-radius: 1em;
 }
 
 a {

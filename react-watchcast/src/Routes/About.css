@@ -13,10 +13,6 @@
   float: left;
 }
 
-.support-box + .support-box {
-  /* padding: 5vmin 10vmin 5vmin 5vmin; */
-}
-
 .labels-container input {
   display: none;
 }

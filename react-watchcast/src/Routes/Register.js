@@ -4,7 +4,7 @@ import axios from "axios";
 import WatchCast from "../Component/WatchCast";
 import Button from "../Component/Button";
 import config from "../config";
-
+import "./LoginAndRegister.css"
 class Register extends Component {
 
     constructor(props) {
@@ -56,22 +56,54 @@ class Register extends Component {
 
     }
 
+
+
     render() {
         return (
             <div id="SLIDE_BG">
                 <WatchCast />
-                <div className="loginRegister">
-                    <form className="loginRegisterForm" onSubmit={this.handleSubmit}>
-                        <input className="loginRegisterFormInput" type="text" name="email" id="email" placeholder="E-mail" onChange={this.handleChange} />
-                        <input className="loginRegisterFormInput" type="password" name="password" id="password" placeholder="Hasło" onChange={this.handleChange} />
-                        <input className="loginRegisterFormInput" type="password" name="passwordAgain" id="passwordAgain" placeholder="Powtórzyć hasło" onChange={this.handleChange} />
-                        <input className="loginRegisterFormInput" type="text" name="firstName" id="firstName" placeholder="Imie" onChange={this.handleChange} />
-                        <input className="loginRegisterFormInput" type="text" name="lastName" id="lastName" placeholder="Nazwisko" onChange={this.handleChange} />
-                        <input className="loginRegisterFormInput" type="text" name="country" id="country" placeholder="Kraj" onChange={this.handleChange} />
-                        <input className="loginRegisterSubmit" type="submit" value="Sign in" />
+                <div className="register">
+                    <form className="registerForm" onSubmit={this.handleSubmit}>
+                        E-mail:<input className="registerFormInput"
+                            type="text"
+                            name="email"
+                            id="email"
+                            placeholder="E-mail"
+                            onChange={this.handleChange} />
+                        Pasword:<input className="registerFormInput"
+                            type="password" name="password"
+                            id="password"
+                            placeholder="Hasło"
+                            onChange={this.handleChange} />
+                        Confirm password:<input style={this.state.password !== this.state.passwordAgain ? { borderBottomColor: "red" } : {}}
+                            className="registerFormInput"
+                            type="password"
+                            name="passwordAgain"
+                            id="passwordAgain"
+                            placeholder="Powtórzyć hasło"
+                            onChange={this.handleChange} />
+                        First name:<input className="registerFormInput"
+                            type="text"
+                            name="firstName"
+                            id="firstName"
+                            placeholder="Imie"
+                            onChange={this.handleChange} />
+                        Last name:<input className="registerFormInput"
+                            type="text"
+                            name="lastName"
+                            id="lastName"
+                            placeholder="Nazwisko"
+                            onChange={this.handleChange} />
+                        Country:<input className="registerFormInput"
+                            type="text"
+                            name="country"
+                            id="country"
+                            placeholder="Kraj"
+                            onChange={this.handleChange} />
+                        <input className="registerFormSubmit" type="submit" value="Sign in" />
                     </form>
-                    <div className="toLoginRegister">
-                        <h2 className="toLR">Masz już konto? Zaloguj się!</h2>
+                    <div className="toLogin">
+                        <h2 className="toL">Masz już konto? Zaloguj się!</h2>
                         <Button text='login' link='/login' />
                     </div>
                 </div>

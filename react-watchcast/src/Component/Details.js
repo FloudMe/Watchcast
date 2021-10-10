@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import axios from "axios";
 import config from '../config';
 import authentication from "../scripts/authentication";
+import './DetailsAndChangePass.css'
 
 export const Details = ({ _email, _name, _lastName, _country }) => {
     const [email, setEmail] = useState(_email);
@@ -21,40 +22,46 @@ export const Details = ({ _email, _name, _lastName, _country }) => {
                 "last_name": lastName,
                 "country": country
             }
-            await axios.put(config.backendPath + `users/update`, {user}, {headers: { 'authorization': authentication.authenticationHeader() }})
+            await axios.put(config.backendPath + `users/update`, { user },
+                { headers: { 'authorization': authentication.authenticationHeader() } })
         }
     }
 
     return (
-        <form onSubmit={onSubmit}>
-            <input
+        <form className="formDetails" onSubmit={onSubmit}>
+            E-mail:<input
+                style={email === '' ? { borderBottomColor: "red" } : {}}
+                className='detailsFormInput'
                 type='text'
                 placeholder='Email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-
-            <input
+            Name: <input
+                style={name === '' ? { borderBottomColor: "red" } : {}}
+                className='detailsFormInput'
                 type='text'
                 placeholder='Name'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
             />
-
-            <input
+            Last name:<input
+                style={lastName === '' ? { borderBottomColor: "red" } : {}}
+                className='detailsFormInput'
                 type='text'
                 placeholder='Last Name'
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
             />
-
-            <input
+            Country: <input
+                style={country === '' ? { borderBottomColor: "red" } : {}}
+                className='detailsFormInput'
                 type='text'
                 placeholder='Country'
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
             />
-            <input className="newDetails" type="submit" value="Change user details" />
+            <input className="newDetailsSubmit" type="submit" value="Change user details" />
         </form>
     )
 }

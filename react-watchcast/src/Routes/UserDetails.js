@@ -5,6 +5,9 @@ import { Details } from "../Component/Details";
 import Navbar from "../Component/Navbar";
 import config from "../config";
 import authentication from "../scripts/authentication";
+import Button from "../Component/Button";
+import './UserDetails.css'
+import './LoginAndRegister.css'
 
 class UserDetails extends Component {
     constructor(props) {
@@ -17,33 +20,60 @@ class UserDetails extends Component {
             lastName: '',
             country: ''
         }
+        this.deleteUser = this.deleteUser.bind(this);
     }
 
     componentDidMount() {
-        axios.get(config.backendPath + `users/`, { headers: { 'Authorization': authentication.authenticationHeader() } }).then(res => {
-            const user = res.data;
-            if (user === "Brak tokena")
-                return this.props.history.push("/");
+        axios.get(config.backendPath + `users/`,
+            { headers: { 'Authorization': authentication.authenticationHeader() } })
+            .then(res => {
+                const user = res.data;
+                if (user === "Brak tokena")
+                    return this.props.history.push("/");
 
-            this.setState({ email: user.email, name: user.first_name, lastName: user.last_name, country: user.country });
-        });
+                this.setState({ email: user.email, name: user.first_name, lastName: user.last_name, country: user.country });
+            })
+            .catch(res =>{
+                alert("Błąd z danymi urzytkownika")
+            })
+    }
+
+    deleteUser() {
+        axios.delete(config.backendPath + 'users/',
+            { headers: { 'Authorization': authentication.authenticationHeader() } })
+            .then(res => {
+                    alert("User successfully deleted")
+                    authentication.logout()
+                    window.location.href = '/'
+                
+            })
+            .catch(res => {
+                alert("Nie usunieto użytkownika");
+            })
     }
 
     render() {
         return (
-            <div >
+            <div>
                 <Navbar />
-                <div className='details' >
-                    <div className='user' onDoubleClick={() => this.setState({ showUserDetails: !this.state.showUserDetails })}>
-                        Użytkownik
+                <div className='userDetails'>
+                    <div className='details' >
+                        <div className='user' onClick={() => this.setState({ showUserDetails: !this.state.showUserDetails })}>
+                            Użytkownik
+                        </div>
+                        {this.state.showUserDetails &&
+                            <Details _email={this.state.email} _name={this.state.name} _lastName={this.state.lastName} _country={this.state.country} />}
                     </div>
-                    {this.state.showUserDetails && <Details _email={this.state.email} _name={this.state.name} _lastName={this.state.lastName} _country={this.state.country} />}
-                </div>
-                <div className='changePass' >
-                    <div className="pass" onDoubleClick={() => this.setState({ showUserChangePass: !this.state.showUserChangePass })}>
-                        Change Password
+
+                    <div className='changePass' >
+                        <div className="pass" onClick={() => this.setState({ showUserChangePass: !this.state.showUserChangePass })}>
+                            Change Password
+                        </div>
+                        {this.state.showUserChangePass && <ChangePass />}
                     </div>
-                    {this.state.showUserChangePass && <ChangePass />}
+                    <div className='deleteButtonUser' onClick={() => this.deleteUser()}>
+                        <Button text='Delete user' />
+                    </div>
                 </div>
             </div>
         )
