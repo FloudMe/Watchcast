@@ -1,6 +1,5 @@
 const authenticationHeader = () => {
     const token = JSON.parse(localStorage.getItem('user'));
-
     if (token) {
         return 'Bearer ' + token;
     } else {
@@ -11,7 +10,6 @@ const authenticationHeader = () => {
 const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("role");
-
 }
 
 const currentUser = () => {
@@ -22,9 +20,11 @@ const userRole = () => {
     return JSON.parse(localStorage.getItem("role"));
 }
 
-export default {
+const funcToEport = {
     authenticationHeader,
     logout,
     currentUser,
     userRole
 }
+
+export default funcToEport;

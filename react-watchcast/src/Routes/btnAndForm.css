@@ -41,11 +41,6 @@
   margin-left: 15em;
 }
 
-/* .detailsFormInput,
-.changePassFormInput {
-  width: 90%;
-} */
-
 .loginForm,
 .registerForm {
   display: inline-grid;
@@ -72,4 +67,17 @@
   width: 20%;
   margin-left: 16em;
 }
+
+@media only screen and (max-device-width: 420px) {
+  .btn {
+    margin-left: 1em;
+  }
+  
+  .loginFormSubmit,
+  .registerFormSubmit {
+    margin-left: 4em;
+    width: 8em;
+  }
+}
+
 

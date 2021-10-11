@@ -35,3 +35,13 @@
 .adminsSelect::after {
   box-sizing: border-box;
 }
+
+@media only screen and (max-device-width: 420px) {
+  .changeRole {
+    flex-direction: column;
+  }
+
+  .changeRole > div {
+    margin-bottom: 2em;
+  }
+}

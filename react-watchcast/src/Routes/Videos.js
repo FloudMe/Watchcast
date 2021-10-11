@@ -9,7 +9,6 @@ class Videos extends Component {
         super(props);
         this.state = {
             videos: [],
-            comments: [],
         }
     }
 

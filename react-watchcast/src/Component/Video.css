@@ -35,3 +35,35 @@
 .videos .description {
   width: 83%;
 }
+
+@media only screen and (max-device-width: 420px) {
+  .videos .videoImg,
+  .sectionVideos .videosLink .videoImg {
+    width: 100%;
+    height: auto;
+  }
+
+  .videos .videosLink,
+  .sectionVideos .videosLink  {
+    flex-direction: column;
+  }
+
+  .videos .videoText {
+    margin-left: 0em;
+    margin-right: 0em;
+  }
+
+  .videos .videoText > h1,
+  .sectionVideos .videosLink .videoText > h1 {
+    margin-left: 0;
+  }
+
+  .videos .descriptionAndCreated_at {
+    flex-direction: column;
+  }
+
+  .videos .description {
+    width: 100%;
+    margin-bottom: 1em;
+  }
+}

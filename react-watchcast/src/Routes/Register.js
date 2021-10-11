@@ -28,9 +28,37 @@ class Register extends Component {
     };
 
     handleSubmit(event) {
-
         event.preventDefault();
-        const userAll = {
+        if (this.checkIfNotNull()) {
+            this.register();
+        }
+    }
+
+    checkIfNotNull() {
+        return this.state.email !== '' &&
+            this.state.password !== '' &&
+            this.state.passwordAgain !== '' &&
+            this.state.firstName !== '' &&
+            this.state.lastName !== '' &&
+            this.state.country !== '';
+    }
+
+    register() {
+        const userAll = this.getUser();
+
+        axios.post(config.backendPath + `users/register`, userAll)
+            .then(res => {
+                alert("Udana rejestracja. Przeniesienie na stronę logowania");
+                this.props.history.push('/login');
+            })
+            .catch(res => {
+                console.error(res);
+                alert("Błąd z rejestracją.");
+            });
+    }
+
+    getUser() {
+        return {
             user: {
                 email: this.state.email,
                 password: this.state.password,
@@ -40,23 +68,8 @@ class Register extends Component {
                 last_name: this.state.lastName,
                 country: this.state.country,
             },
-
-        }
-
-        axios.post(config.backendPath + `users/register`, userAll)
-            .then(res => {
-                alert("Udana rejestracja. Przeniesienie na stronę logowania");
-                this.props.history.push('/login');
-            })
-            .catch(res => {
-                console.error(res);
-                alert("Błąd z rejestracją. Powrót na stronę glówną");
-                this.props.history.push('/');
-            });
-
+        };
     }
-
-
 
     render() {
         return (

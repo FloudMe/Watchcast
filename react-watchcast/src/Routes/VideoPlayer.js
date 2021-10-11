@@ -8,6 +8,8 @@ import authentication from "../scripts/authentication";
 import Video from "../Component/Video";
 import VideoDescription from "../Component/VideoDescription";
 import config from "../config";
+import './VideoPlayer.css'
+import '../Component/Video.css'
 
 class VideoPlayer extends Component {
     constructor(props) {
@@ -18,6 +20,7 @@ class VideoPlayer extends Component {
             comments: [],
             comment: '',
             videos: [],
+            enabled: authentication.currentUser() === null ? "disabled" : "",
         }
         this.buttonClick = this.buttonClick.bind(this);
     }
@@ -26,7 +29,6 @@ class VideoPlayer extends Component {
         axios.get(config.backendPath + `videos/` + this.state.id)
             .then(res => {
                 const data = res.data;
-                console.log(data)
                 
                 this.setState({video: data.video});
                 this.setState({comments: data.comments});
@@ -38,18 +40,26 @@ class VideoPlayer extends Component {
     }
 
     buttonClick() {
-        if (this.state.comment !== '') {
-            axios.post(config.backendPath + `videos/`,
-                { "video": this.state.id, "description": this.state.comment },
-                { headers: { 'authorization': authentication.authenticationHeader() } })
-                .then(res => {
-                    this.state.comments.push(res.data);
-                    this.setState({ reload: true });
-                })
-                .catch(res => {
-                    alert("Błąd z dodaniem komentarza");
-                })
+        if (this.isCommentNotEmpty()) {
+            this.sendComment();
         }
+    }
+
+    isCommentNotEmpty() {
+        return this.state.comment !== '';
+    }
+
+    sendComment() {
+        axios.post(config.backendPath + `videos/`,
+            { "video": this.state.id, "description": this.state.comment },
+            { headers: { 'authorization': authentication.authenticationHeader() } })
+            .then(res => {
+                this.state.comments.push(res.data);
+                this.setState({ reload: true });
+            })
+            .catch(res => {
+                alert("Błąd z dodaniem komentarza");
+            });
     }
 
     render() {
@@ -63,8 +73,8 @@ class VideoPlayer extends Component {
                                 className="player"
                                 url={this.state.video.path}
                                 controls={true}
-                                width='70%'
-                                height='70%'
+                                width='100%'
+                                height='100%'
                             />
                             <VideoDescription video={this.state.video} />
                         </div>
@@ -73,8 +83,9 @@ class VideoPlayer extends Component {
                             <input className='textComment'
                                 type='text'
                                 placeholder='Your comment'
+                                disabled={this.state.enabled}
                                 onChange={(e) => this.setState({ comment: e.target.value })} />
-                            <button className='adButton' type="button" onClick={this.buttonClick}>Click</button>
+                            <button className='adButton' disabled={this.state.enabled} type="button" onClick={this.buttonClick}>Click</button>
                             {this.state.comments.map(comment => {
                                 return <Comment comment={comment} />
                             })}

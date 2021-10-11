@@ -6,15 +6,10 @@ import './Navbar.css';
 
 const Navbar = () => {
     let [show, setShow] = useState(false);
-    let [search, setSearch] = useState('');
 
+    const userLog = authentication.currentUser();
     const userRole = authentication.userRole();
 
-    const buttonClick = (e) => {
-        e.preventDefault();
-        if (search !== '')
-            alert(search);
-    }
     return (
         <nav className="navbar">
             <div className="links">
@@ -23,7 +18,7 @@ const Navbar = () => {
                     to={"/videos"}
                     style={{ marginLeft: "1em", color: '#FFF', textDecoration: 'none' }}>WatchCast</Link>
 
-                <FiSettings onClick={() => setShow(!show)} viewBox="0 0 20 20" />
+                { userLog && <FiSettings onClick={() => setShow(!show)} viewBox="0 0 20 20" /> }
                 {show &&
                     <div className='settings'>
                         <ul>
@@ -35,9 +30,8 @@ const Navbar = () => {
                             }}><li>Logout</li></Link>
 
                         </ul>
-                    </div>}
-
-
+                    </div>
+                }
             </div>
         </nav>
     )

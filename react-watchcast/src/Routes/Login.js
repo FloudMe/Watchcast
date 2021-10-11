@@ -27,32 +27,50 @@ class Login extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        if (this.fieldsIsNotEmpty()) {
+            this.login();
+        }
+    }
 
+    fieldsIsNotEmpty() {
+        return this.state.email !== '' && this.state.password !== '';
+    }
+
+    login() {
         const user = {
             email: this.state.email,
             password: this.state.password
-        }
+        };
 
         axios.post(config.backendPath + `users/login`, user)
             .then(res => {
                 const data = res.data;
-                if (data !== "Wrong password!" && data !== "User does not exist") {
-
-                    localStorage.setItem("role", JSON.stringify(data.role));
-                    localStorage.setItem("user", JSON.stringify(data.token));
-
-                    this.props.setLoggedUser(authentication.currentUser());
-                    // userHasAuthenticated(true);
-
-                    this.props.history.push('/videos');
-                } else {
-                    throw Error("Zle hasło");
-                }
-            })
+                this.resLogin(data)})
             .catch(res => {
                 console.error(res);
                 alert("Błąd z zalogowaniem się.");
             });
+    }
+
+    resLogin(data) {
+        if (this.isDataRight(data)) {
+            this.setItems(data);
+        } else {
+            throw Error("Zle hasło");
+        }
+    }
+
+    isDataRight(data) {
+        return data !== "Wrong password!" && data !== "User does not exist";
+    }
+
+    setItems(data) {
+        localStorage.setItem("role", JSON.stringify(data.role));
+        localStorage.setItem("user", JSON.stringify(data.token));
+
+        this.props.setLoggedUser(authentication.currentUser());
+
+        this.props.history.push('/videos');
     }
 
     render() {

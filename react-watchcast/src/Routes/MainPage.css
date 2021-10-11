@@ -15,3 +15,10 @@
   text-shadow: 3px 3px 3px #00000029;
   opacity: 1;
 }
+
+@media only screen and (max-device-width: 420px) {
+  .centerMainPage {
+    left: 10%;
+    width: 80%;
+  }
+}

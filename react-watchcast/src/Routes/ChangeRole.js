@@ -20,22 +20,15 @@ class ChangeRole extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmitUser = this.handleSubmitUser.bind(this);
         this.handleSubmitAdmin = this.handleSubmitAdmin.bind(this);
-        this.axiosPut = this.axiosPut.bind(this);
+        // this.axiosPut = this.axiosPut.bind(this);
     }
 
     componentDidMount() {
-        if (authentication.userRole() === "admin") {
+        if (this.roleIsAdmin()) {
             axios.get(config.backendPath + `users/allUsers`,
                 { headers: { 'authorization': authentication.authenticationHeader() } })
                 .then(res => {
-                    const usersRes = res.data.users;
-                    const adminsRes = res.data.admins;
-
-                    this.setState({ userId: usersRes[0].uuid });
-                    this.setState({ adminId: adminsRes[0].uuid });
-
-                    this.setState({ users: usersRes });
-                    this.setState({ admins: adminsRes });
+                    this.setDataStates(res);
                 })
                 .catch(res => {
                     alert("Błąd pobrania userów");
@@ -51,6 +44,22 @@ class ChangeRole extends Component {
         (target.className === "usersSelect") ?
             this.setState({ userId: uuid }) : this.setState({ adminId: uuid });
     };
+
+    roleIsAdmin() {
+        return authentication.userRole() === "admin";
+    }
+
+    setDataStates(res) {
+        const usersRes = res.data.users;
+        const adminsRes = res.data.admins;
+
+        this.setState({ userId: usersRes[0].uuid });
+        this.setState({ adminId: adminsRes[0].uuid });
+
+        this.setState({ users: usersRes });
+        this.setState({ admins: adminsRes });
+    }
+
 
     handleSubmitUser(event) {
         this.axiosPut(this.state.userId, event);

@@ -2,9 +2,9 @@
 .register {
   background: #ffffffcc 0% 0% no-repeat padding-box;
   border: 1px solid #707070;
-  border-radius: 37px;
+  border-radius: 2em;
   opacity: 1;
-  position: absolute;
+  position: sticky;
   text-align: center;
   top: 30%;
   right: 30%;
@@ -21,4 +21,13 @@
 .register {
   top: 18%;
   height: 68%;
+}
+
+@media only screen and (max-device-width: 420px) {
+  .login,
+  .register {
+    left: 10%;
+    width: 80%;
+    height: auto;
+  }
 }

@@ -15,3 +15,9 @@
   text-shadow: 2px 3px 6px #00000029;
   opacity: 1;
 }
+
+@media only screen and (max-device-width: 420px) {
+  .WatchCast {
+    left:1.5em;
+  }
+}

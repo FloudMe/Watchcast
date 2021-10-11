@@ -14,13 +14,15 @@ svg {
   color: white;
   position: absolute;
   right: 1em;
+  width: 2em;
+  height: 2em;
 }
 
 .settings {
   display: block;
-  right: 0em;
+  right: 0.5em;
   position: absolute;
-  top: 1.5em;
+  top: 2.5em;
   background-color: snow;
   border-style: outset;
   border-radius: 1em;
@@ -33,6 +35,8 @@ a {
 
 ul {
   list-style-type: none;
+  text-align: center;
+  padding: 1em;
 }
 
 .searchBar {
