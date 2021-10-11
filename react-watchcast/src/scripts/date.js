@@ -1,4 +1,4 @@
-function formatedDate(created_at){
+function formatedDate(created_at) {
     const options = {
         year: 'numeric',
         weekday: 'long',

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import "./Background.css"
 import axios from "axios";
-import WatchCast from "../Component/WatchCast";
+import React, { Component } from "react";
 import Button from "../Component/Button";
+import WatchCast from "../Component/WatchCast";
 import config from "../config";
-import "./LoginAndRegister.css"
+import "./Background.css";
+import "./LoginAndRegister.css";
 class Register extends Component {
 
     constructor(props) {
@@ -51,9 +51,8 @@ class Register extends Component {
                 alert("Udana rejestracja. Przeniesienie na stronę logowania");
                 this.props.history.push('/login');
             })
-            .catch(res => {
-                console.error(res);
-                alert("Błąd z rejestracją.");
+            .catch(err => {
+                alert(err.response.data.message);
             });
     }
 

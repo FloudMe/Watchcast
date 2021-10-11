@@ -1,12 +1,13 @@
 import { IsEmail, Length } from "class-validator";
-import {Entity, Column} from "typeorm";
-import  Model  from "./Model";
+import { Column, Entity, Unique } from "typeorm";
+import Model from "./Model";
 
 @Entity('users')
+@Unique(["email"])
 export class User extends Model {
 
-    @Column()
-    @Length(1,255)
+    @Column({ name: 'email' })
+    @Length(1, 255)
     @IsEmail()
     email: string;
 

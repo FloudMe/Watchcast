@@ -10,7 +10,7 @@
   right: 30%;
   left: 30%;
   width: 40%;
-  height: 40%;
+  height: auto;
 }
 
 .toRegister,
@@ -20,7 +20,6 @@
 
 .register {
   top: 18%;
-  height: 68%;
 }
 
 @media only screen and (max-device-width: 420px) {
@@ -28,6 +27,5 @@
   .register {
     left: 10%;
     width: 80%;
-    height: auto;
   }
 }

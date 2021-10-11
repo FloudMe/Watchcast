@@ -18,7 +18,7 @@ const Navbar = () => {
                     to={"/videos"}
                     style={{ marginLeft: "1em", color: '#FFF', textDecoration: 'none' }}>WatchCast</Link>
 
-                { userLog && <FiSettings onClick={() => setShow(!show)} viewBox="0 0 20 20" /> }
+                {userLog && <FiSettings onClick={() => setShow(!show)} viewBox="0 0 20 20" />}
                 {show &&
                     <div className='settings'>
                         <ul>

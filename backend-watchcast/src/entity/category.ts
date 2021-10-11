@@ -1,5 +1,5 @@
-import {Entity, Column, ManyToOne, OneToMany} from "typeorm";
-import  Model  from "./Model";
+import { Column, Entity } from "typeorm";
+import Model from "./Model";
 
 @Entity()
 export class Category extends Model {

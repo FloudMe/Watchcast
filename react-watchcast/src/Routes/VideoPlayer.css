@@ -59,7 +59,7 @@
 }
 
 .adButton:hover {
-  background-color: #4caf50; /* Green */
+  background-color: #4caf50;
   color: white;
 }
 
@@ -131,18 +131,4 @@
     margin-right: auto;
     width: 90%;
   }
-
-  /* .sectionVideos .videosLink {
-    flex-direction: column;
-  } */
-
-  /* .sectionVideos .videosLink .videoImg {
-    width: 100%;
-    height: auto;
-  } */
-
-  /* .sectionVideos .videosLink .videosText > h1 {
-    margin-left: 0;
-  } */
-
 }

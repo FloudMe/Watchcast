@@ -1,11 +1,11 @@
 import { IsEnum, Length } from "class-validator";
-import {Entity, Column, JoinColumn, OneToOne, OneToMany} from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { Comments } from "./comments";
-import  Model  from "./Model";
-import {User} from "./user";
+import Model from "./Model";
+import { User } from "./user";
 import { Videos } from "./videos";
 
-export type UserRoleType =  "user" | "admin" 
+export type UserRoleType = "user" | "admin"
 
 @Entity()
 export class UserDetails extends Model {
@@ -15,15 +15,15 @@ export class UserDetails extends Model {
     user: User;
 
     @Column()
-    @Length(1,255)
+    @Length(1, 255)
     first_name: string;
 
     @Column()
-    @Length(1,255)
+    @Length(1, 255)
     last_name: string;
 
     @Column()
-    @Length(1,255)
+    @Length(1, 255)
     country: string;
 
     @OneToMany(() => Videos, videos => videos.user)

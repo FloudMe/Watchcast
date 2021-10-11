@@ -1,8 +1,8 @@
-import { React, useState } from 'react';
 import axios from "axios";
+import { React, useState } from 'react';
 import config from '../config';
 import authentication from "../scripts/authentication";
-import './DetailsAndChangePass.css'
+import './DetailsAndChangePass.css';
 
 export const Details = ({ _email, _name, _lastName, _country }) => {
     const [email, setEmail] = useState(_email);

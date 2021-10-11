@@ -1,8 +1,8 @@
-import { React, Component } from "react";
+import { Component, React } from "react";
+import Button from "../Component/Button";
+import WatchCast from "../Component/WatchCast";
 import './Background.css';
 import './MainPage.css';
-import WatchCast from "../Component/WatchCast";
-import Button from "../Component/Button";
 
 class MainPage extends Component {
     render() {

@@ -29,13 +29,13 @@ class VideoPlayer extends Component {
         axios.get(config.backendPath + `videos/` + this.state.id)
             .then(res => {
                 const data = res.data;
-                
-                this.setState({video: data.video});
-                this.setState({comments: data.comments});
-                this.setState({videos: data.anotherVideos})
+
+                this.setState({ video: data.video });
+                this.setState({ comments: data.comments });
+                this.setState({ videos: data.anotherVideos })
             })
-            .catch(res => {
-                alert("Błąd z wideo")
+            .catch(err => {
+                alert(err.response.data.message)
             })
     }
 
@@ -57,14 +57,14 @@ class VideoPlayer extends Component {
                 this.state.comments.push(res.data);
                 this.setState({ reload: true });
             })
-            .catch(res => {
-                alert("Błąd z dodaniem komentarza");
+            .catch(err => {
+                alert(err.response.data.message);
             });
     }
 
     render() {
         return (
-            <div>
+            <div className="background">
                 <Navbar />
                 <div className='videoPlayerPage'>
                     <div className='reactPlayer'>

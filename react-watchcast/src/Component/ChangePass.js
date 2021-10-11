@@ -1,5 +1,5 @@
-import { React, useState } from 'react';
 import axios from "axios";
+import { React, useState } from 'react';
 import authentication from '../scripts/authentication';
 
 const ChangePass = () => {
@@ -14,9 +14,8 @@ const ChangePass = () => {
             axios.put(global.config.backendPath + `users/changePass`,
                 { "newPassword": newPass, "oldPassword": oldPass },
                 { headers: { 'authorization': authentication.authenticationHeader() } })
-                .catch(res => {
-                    console.error(res)
-                    alert("Błąd z hasłem")
+                .catch(err => {
+                    alert(err.response.data.message)
                 })
         }
     }

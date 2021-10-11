@@ -1,13 +1,13 @@
 import axios from "axios";
 import { Component, React } from "react";
+import Button from "../Component/Button";
 import ChangePass from "../Component/ChangePass";
 import { Details } from "../Component/Details";
 import Navbar from "../Component/Navbar";
 import config from "../config";
 import authentication from "../scripts/authentication";
-import Button from "../Component/Button";
-import './UserDetails.css'
-import './LoginAndRegister.css'
+import './LoginAndRegister.css';
+import './UserDetails.css';
 
 class UserDetails extends Component {
     constructor(props) {
@@ -33,8 +33,8 @@ class UserDetails extends Component {
 
                 this.setState({ email: user.email, name: user.first_name, lastName: user.last_name, country: user.country });
             })
-            .catch(res =>{
-                alert("Błąd z danymi urzytkownika")
+            .catch(err => {
+                alert(err.response.data.message)
             })
     }
 
@@ -42,19 +42,19 @@ class UserDetails extends Component {
         axios.delete(config.backendPath + 'users/',
             { headers: { 'Authorization': authentication.authenticationHeader() } })
             .then(res => {
-                    alert("User successfully deleted")
-                    authentication.logout()
-                    window.location.href = '/'
-                
+                alert("User successfully deleted")
+                authentication.logout()
+                window.location.href = '/'
+
             })
-            .catch(res => {
-                alert("Nie usunieto użytkownika");
+            .catch(err => {
+                alert(err.response.data.message);
             })
     }
 
     render() {
         return (
-            <div>
+            <div className="background">
                 <Navbar />
                 <div className='userDetails'>
                     <div className='details' >

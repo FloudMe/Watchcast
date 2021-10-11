@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-import { getConnection, getManager, getRepository } from "typeorm";
+import { getRepository } from "typeorm";
 import { Comments } from "../entity/comments";
 import { User } from "../entity/user";
 import { UserDetails } from "../entity/user-details";
 import { Videos } from "../entity/videos";
 
 const allVideos = async (req: Request, res: Response) => {
-
     try {
         const videos = await Videos.find();
 
@@ -14,7 +13,7 @@ const allVideos = async (req: Request, res: Response) => {
     }
     catch (err) {
         console.error(err)
-        return res.status(404).json({ video: 'Videos' });
+        return res.status(404).json({ message: 'Videos not found' });
     }
 }
 
@@ -25,27 +24,16 @@ const findVideos = async (req: Request, res: Response) => {
         const _comments = await comments(videoUuid);
         const _anotherVideos = await anotherVideos(videoUuid);
 
-        return res.json({ video: video, comments:_comments, anotherVideos: _anotherVideos });
+        return res.json({ video: video, comments: _comments, anotherVideos: _anotherVideos });
     }
     catch (err) {
         console.error(err)
-        return res.status(404).json({ video: 'video' });
-    }
-}
-
-const findVideosByCategory = async (req: Request, res: Response) => {
-    try {
-
-    }
-    catch (err) {
-        console.error(err)
-        return res.status(404).json({ video: 'cetegory' });
+        return res.status(404).json({ message: 'Video not found' });
     }
 }
 
 const addVideo = async (req: Request, res: Response) => {
     try {
-
         const { name, description, path } = req.body;
 
         const video = Videos.create({ name, description, path });
@@ -56,7 +44,7 @@ const addVideo = async (req: Request, res: Response) => {
     }
     catch (err) {
         console.error(err)
-        return res.status(404).json({ video: 'add' });
+        return res.status(500).json({ message: 'Not add videos' });
     }
 }
 
@@ -65,11 +53,11 @@ const addComment = async (req: Request, res: Response) => {
         const { video, description } = req.body;
         const uuid = req.body.data.id;
 
-        const video2 = await Videos.findOne({ where: { uuid: video } })
+        const videoToComment = await Videos.findOneOrFail({ where: { uuid: video } })
         const userDetails = await findDetails(uuid);
 
         const comment = Comments.create({ description })
-        comment.video = video2;
+        comment.video = videoToComment;
         comment.user = userDetails;
 
         await comment.save()
@@ -78,14 +66,13 @@ const addComment = async (req: Request, res: Response) => {
     }
     catch (err) {
         console.error(err)
-        return res.status(404).json({ video: 'comments' });
+        return res.status(500).json({ message: 'Not add comment' });
     }
 }
 
 module.exports = {
     allVideos,
     findVideos,
-    findVideosByCategory,
     addVideo,
     addComment
 }

@@ -5,8 +5,8 @@ import WatchCast from "../Component/WatchCast";
 import config from "../config";
 import authentication from "../scripts/authentication";
 import './Background.css';
+import "./btnAndForm.css";
 import "./LoginAndRegister.css";
-import "./btnAndForm.css"
 
 class Login extends Component {
 
@@ -45,10 +45,10 @@ class Login extends Component {
         axios.post(config.backendPath + `users/login`, user)
             .then(res => {
                 const data = res.data;
-                this.resLogin(data)})
-            .catch(res => {
-                console.error(res);
-                alert("Błąd z zalogowaniem się.");
+                this.resLogin(data)
+            })
+            .catch(err => {
+                alert(err.response.data.message);
             });
     }
 

@@ -1,12 +1,12 @@
-import { React, Component } from "react";
-import Navbar from "../Component/Navbar";
+import { Component, React } from "react";
 import exampleData from '../Component/exampleData';
+import Navbar from "../Component/Navbar";
 import './About.css';
 
 class About extends Component {
     render() {
         return (
-            <div>
+            <div className="background">
                 <Navbar />
                 <div className="labels-container">
                     {exampleData.labels.map((label1) => {

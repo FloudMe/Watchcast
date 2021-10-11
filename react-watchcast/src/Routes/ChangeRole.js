@@ -4,7 +4,7 @@ import Form from "../Component/Form";
 import Navbar from "../Component/Navbar";
 import config from "../config";
 import authentication from "../scripts/authentication";
-import './ChangeRole.css'
+import './ChangeRole.css';
 
 class ChangeRole extends Component {
 
@@ -20,7 +20,6 @@ class ChangeRole extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmitUser = this.handleSubmitUser.bind(this);
         this.handleSubmitAdmin = this.handleSubmitAdmin.bind(this);
-        // this.axiosPut = this.axiosPut.bind(this);
     }
 
     componentDidMount() {
@@ -30,8 +29,8 @@ class ChangeRole extends Component {
                 .then(res => {
                     this.setDataStates(res);
                 })
-                .catch(res => {
-                    alert("Błąd pobrania userów");
+                .catch(err => {
+                    alert(err.response.data.message);
                 })
         } else {
             window.location.href = "/videos";
@@ -74,14 +73,14 @@ class ChangeRole extends Component {
         axios.put(config.backendPath + `users/changeRole`,
             { "user": uuid },
             { headers: { 'authorization': authentication.authenticationHeader() } })
-            .catch(res => {
-                alert("Nie zmieniono roli");
+            .catch(err => {
+                alert(err.response.data.message);
             })
     }
 
     render() {
         return (
-            <div >
+            <div className="background">
                 <Navbar />
                 <div className='changeRole'>
                     <Form classname="users"

@@ -1,7 +1,7 @@
+import axios from "axios";
 import React, { Component } from "react";
 import Navbar from "../Component/Navbar";
 import Video from "../Component/Video";
-import axios from "axios";
 import config from "../config";
 class Videos extends Component {
 
@@ -18,18 +18,17 @@ class Videos extends Component {
                 const videosRes = res.data.videos;
                 this.setState({ videos: videosRes });
             })
-            .catch(res => {
-                alert("Błąd z wideo");
+            .catch(err => {
+                alert(err.response.data.message);
             })
     }
 
     render() {
         return (
-            <div >
+            <div className="background">
                 <Navbar />
                 <div className='videos'>
                     {this.state.videos.map(video => {
-                        console.log(video)
                         return <Video uuid={video.uuid}
                             title={video.name}
                             description={video.description}

@@ -1,5 +1,5 @@
-import {Entity, Column, ManyToOne, OneToOne, JoinColumn} from "typeorm";
-import  Model  from "./Model";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import Model from "./Model";
 import { UserDetails } from "./user-details";
 import { Videos } from "./videos";
 

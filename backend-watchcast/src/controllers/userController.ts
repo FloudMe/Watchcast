@@ -5,10 +5,6 @@ import * as jwt from 'jsonwebtoken';
 import { User } from "../entity/user";
 import { UserDetails } from "../entity/user-details";
 
-const userIndex = (req: Request, res: Response) => {
-    res.json({ content: 'hello user' });
-};
-
 const register = async (req: Request, res: Response) => {
 
     req.body.user.password = await bcrypt.hash(req.body.user.password, 10);
@@ -20,7 +16,7 @@ const register = async (req: Request, res: Response) => {
 
     } catch (err) {
         console.error(err)
-        return res.status(500).json({ error: "Something went wrong!" })
+        return res.status(500).json({ message: "Something went wrong!" })
     }
 }
 
@@ -31,7 +27,7 @@ const login = async (req: Request, res: Response) => {
         bcrypt.compare(req.body.password, user.password, checkPassword(res, user));
     } catch (err) {
         console.error(err)
-        return res.status(404).json('User not found')
+        return res.status(404).json({ message: 'Wrong arguments' })
     }
 }
 
@@ -44,7 +40,7 @@ const remove = async (req: Request, res: Response) => {
         return res.status(204).json({ message: 'User deleted successfully' });
     } catch (err) {
         console.error(err)
-        return res.status(500).json({ error: 'Something went wrong' })
+        return res.status(500).json({ message: 'Something went wrong' })
     }
 }
 
@@ -56,30 +52,29 @@ const findUser = async (req: Request, res: Response) => {
         const { user, userDetails } = await findUserAndDetails(uuid);
 
         const resp = { email: user.email, first_name: userDetails.first_name, last_name: userDetails.last_name, country: userDetails.country };
-        // const resp = {email: user.email, userDetails};
+
         return res.status(200).json(resp);
     } catch (err) {
         console.error(err)
-        return res.status(404).json({ user: 'User not found' })
+        return res.status(404).json({ message: 'User not found' })
     }
 }
 
 const allUsers = async (req: Request, res: Response) => {
-    try{
+    try {
         const allUsers = await UserDetails.find();
-        
+
         const users = allUsers.filter(user => user.role === "user");
         const admins = allUsers.filter(user => user.role === "admin");
 
-        return res.status(200).json({users: users, admins:admins})
+        return res.status(200).json({ users: users, admins: admins })
     } catch (err) {
         console.error(err)
-        return res.status(404).json({ user: 'Users not found' })
+        return res.status(404).json({ message: 'Users not found' })
     }
 }
 
 const updateUser = async (req: Request, res: Response) => {
-    // const uuid = req.params.uuid;
     const uuid = req.body.data.id;
 
     try {
@@ -87,7 +82,7 @@ const updateUser = async (req: Request, res: Response) => {
     }
     catch (err) {
         console.error(err)
-        return res.status(404).json({ user: 'User not found' })
+        return res.status(404).json({ message: 'User not found' })
     }
 }
 
@@ -95,15 +90,15 @@ const updateRole = async (req: Request, res: Response) => {
     const uuid = req.body.user;
 
     try {
-        const user_details = await UserDetails.findOneOrFail({where: {uuid: uuid}});
-        user_details.role = (user_details.role === "user") ? "admin" : "user" ;
+        const user_details = await UserDetails.findOneOrFail({ where: { uuid: uuid } });
+        user_details.role = (user_details.role === "user") ? "admin" : "user";
         user_details.save();
 
         return res.status(200)
     }
     catch (err) {
         console.error(err)
-        return res.status(404).json({ user: 'User not found' })
+        return res.status(404).json({ message: 'User not found' })
     }
 }
 
@@ -115,23 +110,22 @@ const changePass = async (req: Request, res: Response) => {
         const newPass = await bcrypt.hash(req.body.newPassword, 10);
 
         bcrypt.compare(req.body.oldPassword, user.password, (err, result) => {
-            if (err) {
-                return;
-            } // TODO CHECK IF IS NECESSERY
-            if (result) {
+            if (checkResult(err, result)) {
                 user.password = newPass;
                 user.save();
+            }
+            else {
+                throw Error("Error password");
             }
         });
     }
     catch (err) {
         console.error(err)
-        return res.status(404).json({ user: 'User not found' })
+        return res.status(404).json({ message: 'User not found' })
     }
 }
 
 module.exports = {
-    userIndex,
     register,
     login,
     remove,
@@ -156,10 +150,6 @@ async function updateUserDetails(uuid: any, req) {
     await userDetails.save();
 }
 
-function changePassword(res: Response<any, Record<string, any>>, user: User, pass: any): any {
-    
-}
-
 async function findUserAndDetails(uuid: any) {
     const user = await User.findOneOrFail({ uuid });
     const userDetails = await UserDetails.findOneOrFail({ user });
@@ -178,10 +168,7 @@ async function deleteUser(uuid: any) {
 
 function checkPassword(res: Response<any, Record<string, any>>, user: User): any {
     return async (err, result) => {
-        if (err) {
-            return res.json(err);
-        }
-        if (result) {
+        if (checkResult(err, result)) {
             const token = generateAccessToken({ id: user.uuid });
 
             res.cookie('JWT', token, {
@@ -193,8 +180,12 @@ function checkPassword(res: Response<any, Record<string, any>>, user: User): any
 
             return res.json({ "token": token, "role": user_details.role });
         }
-        return res.status(404).json('Wrong password!');
+        throw Error("Wrong arguments");
     };
+}
+
+function checkResult(err: any, result: any) {
+    return !err && result;
 }
 
 function generateAccessToken(id) {
